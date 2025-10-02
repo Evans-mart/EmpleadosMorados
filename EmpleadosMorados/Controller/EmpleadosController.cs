@@ -9,7 +9,7 @@ using Npgsql;  // Asegúrate de tener esta referencia para la excepción Postgre
 namespace EmpleadosMorados.Controller
 
 {
-
+    //Ya jala todo
     public class EmpleadosController
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("EmpleadosMorados.Controller.EmpleadosController");
