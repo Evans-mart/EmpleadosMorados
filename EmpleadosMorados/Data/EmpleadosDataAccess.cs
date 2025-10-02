@@ -86,34 +86,91 @@ namespace EmpleadosMorados.Data
         // ** El método ActualizarEmpleado se eliminaría o modificaría para solo actualizar los campos laborales 
         // ** en TRAY_LAB o una tabla de detalle laboral, asumiendo que los datos personales se actualizan por separado.
 
-        public int ModificarDatosUsuario(Empleado empleado)
+        public int ModificarUsuario(Persona datosPersonales)
         {
-            if (empleado?.DatosPersonales == null || empleado.IdPersona <= 0)
+            if (datosPersonales == null || datosPersonales.IdPersona <= 0)
             {
-                _logger.Error("Datos del empleado nulos o ID de Persona no válido para la modificación.");
+                _logger.Error("Datos personales o IdPersona nulo/inválido para modificación.");
                 return -1;
             }
 
-            // --------------------------------------------------------------------------
-            // ÚNICO PASO: MODIFICAR Datos de la Persona/Usuario (solo tabla USUARIOS)
-            // --------------------------------------------------------------------------
+            // 1. Inicialización de la consulta dinámica y lista de parámetros
+            StringBuilder sql = new StringBuilder("UPDATE USUARIOS SET ");
+            List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
-            // Se asume que este método en PersonasDataAccess actualiza dinámicamente
-            // los campos de la tabla principal de Usuarios (o la tabla de personas)
-            // basándose en los datos no nulos del objeto 'DatosPersonales'.
-            int filasAfectadasUsuario = _personasData.ModificarUsuario(empleado.DatosPersonales);
+            // 2. Construcción Dinámica: Añadir campos solo si el valor NO es nulo o por defecto
 
-            if (filasAfectadasUsuario < 0)
+            // Ejemplo de actualización de cadenas (string)
+            if (!string.IsNullOrEmpty(datosPersonales.Nombre))
             {
-                _logger.Error($"Fallo interno al modificar los datos del usuario con ID: {empleado.IdPersona}.");
-                return -1; // Indica error
+                sql.Append("NOMBRE = @Nombre, ");
+                parametros.Add(_dbAccess.CreateParameter("@Nombre", datosPersonales.Nombre));
+            }
+            if (!string.IsNullOrEmpty(datosPersonales.ApPat))
+            {
+                sql.Append("APELLIDO_PAT = @ApPat, ");
+                parametros.Add(_dbAccess.CreateParameter("@ApPat", datosPersonales.ApPat));
+            }
+            if (!string.IsNullOrEmpty(datosPersonales.Curp))
+            {
+                sql.Append("CURP = @Curp, ");
+                parametros.Add(_dbAccess.CreateParameter("@Curp", datosPersonales.Curp));
             }
 
-            _logger.Info($"Modificación de datos de usuario exitosa para ID: {empleado.IdPersona}. Filas afectadas: {filasAfectadasUsuario}");
+            // Ejemplo de actualización de valores numéricos o que pueden ser nulos (Nullable<T>)
+            if (datosPersonales.Telefono.HasValue)
+            {
+                sql.Append("TELEFONO = @Telefono, ");
+                parametros.Add(_dbAccess.CreateParameter("@Telefono", datosPersonales.Telefono.Value));
+            }
 
-            // Si la actualización es exitosa, se devuelve el número de filas afectadas (0 o 1).
-            return filasAfectadasUsuario;
+            // Si no hay parámetros para actualizar, terminamos
+            if (parametros.Count == 0)
+            {
+                _logger.Warning($"No hay campos para actualizar en USUARIOS para ID: {datosPersonales.IdPersona}.");
+                return 0; // 0 filas afectadas
+            }
 
+            // 3. Limpiar y finalizar la consulta
+            // Remover la última coma y espacio (, )
+            if (sql.ToString().TrimEnd().EndsWith(","))
+            {
+                sql.Length -= 2;
+            }
+
+            // Cláusula WHERE
+            sql.Append(" WHERE NUMERO_USUARIO = @IdPersona");
+
+            // Añadir el parámetro de la clave de búsqueda
+            parametros.Add(_dbAccess.CreateParameter("@IdPersona", datosPersonales.IdPersona));
+
+            int filasAfectadas = -1;
+
+            try
+            {
+                // 4. Conexión y Ejecución (Delegando a PostgresSQLDataAccess)
+                _dbAccess.Connect();
+
+                // Ejecutar la consulta dinámica
+                filasAfectadas = _dbAccess.ExecuteNonQuery(sql.ToString(), parametros.ToArray());
+
+                if (filasAfectadas == 0)
+                {
+                    _logger.Warning($"Usuario con ID {datosPersonales.IdPersona} no encontrado para modificación en USUARIOS.");
+                }
+
+                return filasAfectadas;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al ejecutar UPDATE en USUARIOS para ID: {datosPersonales.IdPersona}.");
+                return -1; // Indica un error SQL/de conexión
+            }
+            finally
+            {
+                // Asegurar que la conexión se cierra/libera
+                _dbAccess.Disconnect();
+            }
         }
     }
         // ...
