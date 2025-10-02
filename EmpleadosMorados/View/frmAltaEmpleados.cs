@@ -256,11 +256,28 @@ namespace EmpleadosMorados.View
 
         private void LimpiarCampos()
         {
-            // Simulación de la limpieza de campos
-            // txtNombre.Text = string.Empty;
-            // txtApPaterno.Text = string.Empty;
+           txtNombre.Text = string.Empty;
+           txtApPat.Text = string.Empty;
+            txtApMat.Text = string.Empty;
+            txtCURP.Text = string.Empty;
+            txtRFC.Text = string.Empty;
+            cboSexo.Text = string.Empty;
+            txtCalle.Text = string.Empty;
+            txtColonia.Text = string.Empty;
+            txtCP.Text = string.Empty;
+            cboEstado.Text = string.Empty;
+            cboMunicipio.Text = string.Empty;
+            txtCorreoPrincipal.Text = string.Empty;
+            txtCorreoSecundario.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            cboDepto.Text = string.Empty;
             // ...
             InicializaVentanaEmpleadoRegistro(); // La forma más simple de resetear combos y reestablecer estados
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
         }
     }
 }

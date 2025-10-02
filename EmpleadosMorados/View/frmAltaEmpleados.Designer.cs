@@ -807,6 +807,7 @@
             btnLimpiar.Text = "LIMPIAR";
             btnLimpiar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnLimpiar.UseVisualStyleBackColor = false;
+            btnLimpiar.Click += btnLimpiar_Click;
             // 
             // btnAgregar
             // 
