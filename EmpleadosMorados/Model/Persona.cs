@@ -4,68 +4,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System;
+using System.Data;
+using System.Collections.Generic;
+
 namespace EmpleadosMorados.Model
 {
     public class Persona
     {
-        public int Id { get; set; } // ID en la tabla USUARIOS
-        public string NombreCompleto { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string Correo { get; set; }
-        public string Telefono { get; set; }
-        public string Rfc { get; set; }
-        public string Curp { get; set; }
-        public DateTime? FechaNacimiento { get; set; }
-        public string Direccion { get; set; }
-        public string Sexo { get; set; } // Para almacenar el género: MASCULINO, FEMENINO, OTRO
-        public string Estatus { get; set; } // 'ACTIVO' o 'BAJA'
-        public string IdDepartamento { get; set; } // ID del departamento de la tabla DEPARTAMENTOS
-        public string NombreDepartamento { get; set; } // Nombre del departamento, ya que también puede ser útil
+        // Propiedades de la persona...
+        public int Id { get; set; } // NUMERO_USUARIO
+        public string NombreCompleto { get; set; } // NOMBRE
+        public string ApellidoPaterno { get; set; } // APELLIDO_PAT
+        public string ApellidoMaterno { get; set; } // APELLIDO_MAT
+        public string Curp { get; set; } // CURP
+        public string Rfc { get; set; } // RFC
+        public string Telefono { get; set; } // TELEFONO
+        public string Sexo { get; set; } // SEXO
+        public string Estatus { get; set; } // ESTATUS
+        public string CorreoPrincipal { get; set; } // CORREOS (PRINCIPAL)
+        public string CorreoSecundario { get; set; } // CORREOS (SECUNDARIO)
+        public Domicilio Domicilio { get; set; } // DOMICILIOS
+        public string IdDepartamento { get; set; } // ID_DEPTO
+        public string NombreDepartamento { get; set; } // Nombre para la lectura
 
-        // Constructor predeterminado
-        public Persona(string nombreCompleto, string correo, string telefono, string curp)
+        // Constructor por defecto (para uso de ORM/mapeo)
+        public Persona()
         {
-            NombreCompleto = nombreCompleto;
-            Correo = correo;
-            Telefono = telefono;
-            Curp = curp;
-            Estatus = "ACTIVO"; // Por defecto, el estatus es 'ACTIVO'
-        }
-
-        // Constructor con campos básicos
-        public Persona(string nombreCompleto, string correo, string telefono, string rfc, string curp)
-        {
-            Id = 0;
-            NombreCompleto = nombreCompleto;
-            Correo = correo;
-            Telefono = telefono;
-            Rfc = rfc;
-            Curp = curp;
-            Direccion = string.Empty;
-            FechaNacimiento = null;
+            Domicilio = new Domicilio();
             Estatus = "ACTIVO";
         }
 
-        // Constructor completo
-        public Persona(int id, string nombreCompleto, string correo, string telefono, string rfc, string curp, DateTime? fechaNacimiento, string direccion, string sexo, string estatus, string idDepartamento, string nombreDepartamento)
+        // Constructor con campos mínimos (Nombre, CURP, Teléfono, Correo Principal)
+        public Persona(string nombreCompleto, string apellidoPaterno, string curp, string telefono, string correoPrincipal)
+        {
+            NombreCompleto = nombreCompleto;
+            ApellidoPaterno = apellidoPaterno;
+            Curp = curp;
+            Telefono = telefono;
+            CorreoPrincipal = correoPrincipal;
+
+            Domicilio = new Domicilio();
+            Estatus = "ACTIVO";
+        }
+
+        // Constructor con campos básicos (Incluye RFC y Sexo)
+        public Persona(string nombreCompleto, string apellidoPaterno, string apellidoMaterno, string curp, string rfc, string telefono, string sexo, string correoPrincipal, string idDepartamento)
+        {
+            NombreCompleto = nombreCompleto;
+            ApellidoPaterno = apellidoPaterno;
+            ApellidoMaterno = apellidoMaterno;
+            Curp = curp;
+            Rfc = rfc;
+            Telefono = telefono;
+            Sexo = sexo;
+            CorreoPrincipal = correoPrincipal;
+            IdDepartamento = idDepartamento;
+
+            Domicilio = new Domicilio();
+            Estatus = "ACTIVO";
+        }
+
+        // Constructor completo (para obtener datos de la BD o actualización total)
+        public Persona(int id, string nombreCompleto, string apellidoPaterno, string apellidoMaterno, string curp, string rfc, string telefono, string sexo, string estatus, string correoPrincipal, string correoSecundario, Domicilio domicilio, string idDepartamento, string nombreDepartamento)
         {
             Id = id;
             NombreCompleto = nombreCompleto;
-            Correo = correo;
-            Telefono = telefono;
-            Rfc = rfc;
+            ApellidoPaterno = apellidoPaterno;
+            ApellidoMaterno = apellidoMaterno;
             Curp = curp;
-            FechaNacimiento = fechaNacimiento;
-            Direccion = direccion;
+            Rfc = rfc;
+            Telefono = telefono;
             Sexo = sexo;
             Estatus = estatus;
+            CorreoPrincipal = correoPrincipal;
+            CorreoSecundario = correoSecundario;
+            Domicilio = domicilio;
             IdDepartamento = idDepartamento;
             NombreDepartamento = nombreDepartamento;
-        }
-
-        public Persona()
-        {
         }
     }
 }
