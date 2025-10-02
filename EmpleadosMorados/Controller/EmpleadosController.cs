@@ -5,10 +5,11 @@ using EmpleadosMorados.Utilities; // Asumo que aquí está tu clase Validaciones
 using System;
 using System.Collections.Generic;
 
-namespace EmpleadosMorados.Business
+namespace EmpleadosMorados.Controller
+
 {
     // Clase que contiene la lógica de negocio para la gestión de Empleados
-    public class EmpleadosNegocio
+    public class EmpleadosController
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("EmpleadosMorados.Business.EmpleadosNegocio");
         private readonly EmpleadosDataAccess _empleadosData;
@@ -17,7 +18,7 @@ namespace EmpleadosMorados.Business
         // Asumo la existencia de una clase de catálogo para obtener IDs geográficos
         private readonly CatalogosDataAccess _catalogosData;
 
-        public EmpleadosNegocio()
+        public EmpleadosController()
         {
             _empleadosData = new EmpleadosDataAccess();
             _personasData = new PersonasDataAccess();
