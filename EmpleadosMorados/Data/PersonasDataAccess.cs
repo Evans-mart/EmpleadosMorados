@@ -164,7 +164,7 @@ namespace EmpleadosMorados.Data
                 if (persona.IdDepartamento == null)
                 {
                     sql.Append("ID_DEPTO = @IdDepto, ");
-                    parametros.Add(_dbAccess.CreateParameter("@IdDepto", persona.IdDepartamento));
+                    parametros.Add(_dbAccess.CreateParameter("@IdDepto", persona.IdDepartamento.Value));
                 }
 
                 // Si no hay campos que actualizar, salimos
