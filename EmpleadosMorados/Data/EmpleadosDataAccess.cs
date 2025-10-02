@@ -82,42 +82,6 @@ namespace EmpleadosMorados.Data
                 _dbAccess.Disconnect();
             }
         }
-
-        // ** El método ActualizarEmpleado se eliminaría o modificaría para solo actualizar los campos laborales 
-        // ** en TRAY_LAB o una tabla de detalle laboral, asumiendo que los datos personales se actualizan por separado.
-
-        public int ModificarDatosUsuario(Empleado empleado)
-        {
-            if (empleado?.DatosPersonales == null || empleado.IdPersona <= 0)
-            {
-                _logger.Error("Datos del empleado nulos o ID de Persona no válido para la modificación.");
-                return -1;
-            }
-
-            // --------------------------------------------------------------------------
-            // ÚNICO PASO: MODIFICAR Datos de la Persona/Usuario (solo tabla USUARIOS)
-            // --------------------------------------------------------------------------
-
-            // Se asume que este método en PersonasDataAccess actualiza dinámicamente
-            // los campos de la tabla principal de Usuarios (o la tabla de personas)
-            // basándose en los datos no nulos del objeto 'DatosPersonales'.
-            int filasAfectadasUsuario = _personasData.ModificarUsuario(empleado.DatosPersonales);
-
-            if (filasAfectadasUsuario < 0)
-            {
-                _logger.Error($"Fallo interno al modificar los datos del usuario con ID: {empleado.IdPersona}.");
-                return -1; // Indica error
-            }
-
-            _logger.Info($"Modificación de datos de usuario exitosa para ID: {empleado.IdPersona}. Filas afectadas: {filasAfectadasUsuario}");
-
-            // Si la actualización es exitosa, se devuelve el número de filas afectadas (0 o 1).
-            return filasAfectadasUsuario;
-
-        }
-    }
-        // ...
-
-        // (El resto de métodos como ObtenerTodosLosEmpleados, deben ser refactorizados para usar TRAY_LAB y la nueva estructura de Persona/Domicilio)
     }
 }
+

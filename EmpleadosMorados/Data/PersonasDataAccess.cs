@@ -169,7 +169,7 @@ namespace EmpleadosMorados.Data
 
         private void InsertarDomicilio(int idUsuario, Domicilio domicilio)
         {
-            string query = @"INSERT INTO DOMICILIOS (NOMBRE_USUARIO, CALLE, NO_EXT, NO_INT, CP, COLONIA, ID_MUNICIPIO)
+            string query = @"INSERT INTO DOMICILIOS (NUMERO_USUARIO, CALLE, NO_EXT, NO_INT, CP, COLONIA, ID_MUNICIPIO)
                              VALUES (@UsuarioId, @Calle, @NoExt, @NoInt, @CP, @Colonia, @IdMunicipio)";
 
             NpgsqlParameter[] parameters = new NpgsqlParameter[]
