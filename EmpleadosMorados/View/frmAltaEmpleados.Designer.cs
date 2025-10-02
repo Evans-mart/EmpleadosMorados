@@ -290,7 +290,7 @@
             // 
             txtRFC.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             txtRFC.Location = new Point(3, 26);
-            txtRFC.MaxLength = 100;
+            txtRFC.MaxLength = 13;
             txtRFC.Name = "txtRFC";
             txtRFC.Size = new Size(326, 30);
             txtRFC.TabIndex = 1;
@@ -319,7 +319,7 @@
             // 
             txtCURP.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             txtCURP.Location = new Point(3, 26);
-            txtCURP.MaxLength = 100;
+            txtCURP.MaxLength = 18;
             txtCURP.Name = "txtCURP";
             txtCURP.Size = new Size(326, 30);
             txtCURP.TabIndex = 1;
@@ -644,7 +644,7 @@
             // 
             txtCP.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             txtCP.Location = new Point(3, 26);
-            txtCP.MaxLength = 100;
+            txtCP.MaxLength = 5;
             txtCP.Name = "txtCP";
             txtCP.Size = new Size(326, 30);
             txtCP.TabIndex = 1;
@@ -674,7 +674,7 @@
             txtNoInt.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             txtNoInt.ForeColor = Color.DarkGray;
             txtNoInt.Location = new Point(3, 26);
-            txtNoInt.MaxLength = 10;
+            txtNoInt.MaxLength = 5;
             txtNoInt.Name = "txtNoInt";
             txtNoInt.Size = new Size(125, 30);
             txtNoInt.TabIndex = 1;
@@ -703,7 +703,7 @@
             // 
             txtNoExt.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
             txtNoExt.Location = new Point(3, 26);
-            txtNoExt.MaxLength = 100;
+            txtNoExt.MaxLength = 5;
             txtNoExt.Name = "txtNoExt";
             txtNoExt.Size = new Size(128, 30);
             txtNoExt.TabIndex = 1;
