@@ -1,8 +1,4 @@
-﻿// Reemplaza TODO el contenido de tu archivo frmEliminaEmpleado.Designer.cs con esto.
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace EmpleadosMorados.View
+﻿namespace EmpleadosMorados.View
 {
     partial class frmEliminaEmpleado
     {
@@ -26,18 +22,9 @@ namespace EmpleadosMorados.View
             btnUpdateEmpleado = new FontAwesome.Sharp.IconButton();
             btnReadEmpleado = new FontAwesome.Sharp.IconButton();
             btnCreateEmpleado = new FontAwesome.Sharp.IconButton();
-            lblTitulo = new Label();
-            lblDescripcion = new Label();
-            lblNombreBusqueda = new Label();
-            txtNombreBusqueda = new TextBox();
-            lblApellidoBusqueda = new Label();
-            txtApellidoBusqueda = new TextBox();
-            btnBuscar = new Button();
-            dgvResultados = new DataGridView();
-            btnConfirmarBorrar = new Button();
-            btnBaja = new Button();
+            label1 = new Label();
+            label2 = new Label();
             panelBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvResultados).BeginInit();
             SuspendLayout();
             // 
             // panelBar
@@ -133,131 +120,26 @@ namespace EmpleadosMorados.View
             btnCreateEmpleado.UseVisualStyleBackColor = false;
             btnCreateEmpleado.Click += btnCreateEmpleado_Click;
             // 
-            // lblTitulo
+            // label1
             // 
-            lblTitulo.AutoSize = true;
-            lblTitulo.Font = new Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.ForeColor = Color.FromArgb(12, 215, 253);
-            lblTitulo.Location = new Point(25, 100);
-            lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(244, 35);
-            lblTitulo.TabIndex = 18;
-            lblTitulo.Text = "Eliminar Empleado";
+            label1.AutoSize = true;
+            label1.Font = new Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(12, 215, 253);
+            label1.Location = new Point(12, 89);
+            label1.Name = "label1";
+            label1.Size = new Size(244, 35);
+            label1.TabIndex = 5;
+            label1.Text = "Eliminar Empleado";
             // 
-            // lblDescripcion
+            // label2
             // 
-            lblDescripcion.AutoSize = true;
-            lblDescripcion.Font = new Font("Corbel", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDescripcion.ForeColor = Color.White;
-            lblDescripcion.Location = new Point(28, 145);
-            lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(602, 24);
-            lblDescripcion.TabIndex = 17;
-            lblDescripcion.Text = "Ingresa el nombre y apellido del empleado para buscarlo en el sistema.";
-            // 
-            // lblNombreBusqueda
-            // 
-            lblNombreBusqueda.AutoSize = true;
-            lblNombreBusqueda.Font = new Font("Corbel", 10.8F, FontStyle.Bold);
-            lblNombreBusqueda.ForeColor = Color.WhiteSmoke;
-            lblNombreBusqueda.Location = new Point(30, 200);
-            lblNombreBusqueda.Name = "lblNombreBusqueda";
-            lblNombreBusqueda.Size = new Size(78, 22);
-            lblNombreBusqueda.TabIndex = 16;
-            lblNombreBusqueda.Text = "Nombre:";
-            // 
-            // txtNombreBusqueda
-            // 
-            txtNombreBusqueda.Font = new Font("Segoe UI", 10.8F);
-            txtNombreBusqueda.Location = new Point(34, 225);
-            txtNombreBusqueda.Name = "txtNombreBusqueda";
-            txtNombreBusqueda.Size = new Size(300, 31);
-            txtNombreBusqueda.TabIndex = 10;
-            // 
-            // lblApellidoBusqueda
-            // 
-            lblApellidoBusqueda.AutoSize = true;
-            lblApellidoBusqueda.Font = new Font("Corbel", 10.8F, FontStyle.Bold);
-            lblApellidoBusqueda.ForeColor = Color.WhiteSmoke;
-            lblApellidoBusqueda.Location = new Point(356, 200);
-            lblApellidoBusqueda.Name = "lblApellidoBusqueda";
-            lblApellidoBusqueda.Size = new Size(146, 22);
-            lblApellidoBusqueda.TabIndex = 15;
-            lblApellidoBusqueda.Text = "Apellido Paterno:";
-            // 
-            // txtApellidoBusqueda
-            // 
-            txtApellidoBusqueda.Font = new Font("Segoe UI", 10.8F);
-            txtApellidoBusqueda.Location = new Point(360, 225);
-            txtApellidoBusqueda.Name = "txtApellidoBusqueda";
-            txtApellidoBusqueda.Size = new Size(300, 31);
-            txtApellidoBusqueda.TabIndex = 11;
-            // 
-            // btnBuscar
-            // 
-            btnBuscar.BackColor = Color.SlateBlue;
-            btnBuscar.Cursor = Cursors.Hand;
-            btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Font = new Font("Corbel", 10.8F, FontStyle.Bold);
-            btnBuscar.ForeColor = Color.White;
-            btnBuscar.Location = new Point(680, 220);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(120, 40);
-            btnBuscar.TabIndex = 12;
-            btnBuscar.Text = "Buscar";
-            btnBuscar.UseVisualStyleBackColor = false;
-            btnBuscar.Click += btnBuscar_Click;
-            // 
-            // dgvResultados
-            // 
-            dgvResultados.AllowUserToAddRows = false;
-            dgvResultados.AllowUserToDeleteRows = false;
-            dgvResultados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvResultados.BackgroundColor = Color.FromArgb(45, 49, 57);
-            dgvResultados.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvResultados.Location = new Point(34, 280);
-            dgvResultados.MultiSelect = false;
-            dgvResultados.Name = "dgvResultados";
-            dgvResultados.ReadOnly = true;
-            dgvResultados.RowHeadersWidth = 51;
-            dgvResultados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvResultados.Size = new Size(1194, 350);
-            dgvResultados.TabIndex = 13;
-            dgvResultados.SelectionChanged += dgvResultados_SelectionChanged;
-            // 
-            // btnConfirmarBorrar
-            // 
-            btnConfirmarBorrar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnConfirmarBorrar.BackColor = Color.Crimson;
-            btnConfirmarBorrar.Cursor = Cursors.Hand;
-            //btnConfirmarBorrar.Enabled = false;
-            btnConfirmarBorrar.FlatStyle = FlatStyle.Flat;
-            btnConfirmarBorrar.Font = new Font("Corbel", 12F, FontStyle.Bold);
-            btnConfirmarBorrar.ForeColor = Color.White;
-            btnConfirmarBorrar.Location = new Point(680, 663);
-            btnConfirmarBorrar.Name = "btnConfirmarBorrar";
-            btnConfirmarBorrar.Size = new Size(268, 60);
-            btnConfirmarBorrar.TabIndex = 14;
-            btnConfirmarBorrar.Text = "Eliminar permanentemente al seleccionado";
-            btnConfirmarBorrar.UseVisualStyleBackColor = false;
-            btnConfirmarBorrar.Click += btnEliminar_Click;
-            // 
-            // btnConfirmarBaja
-            // 
-            btnBaja.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnBaja.BackColor = Color.Crimson;
-            btnBaja.Cursor = Cursors.Hand;
-            //btnBaja.Enabled = false;
-            btnBaja.FlatStyle = FlatStyle.Flat;
-            btnBaja.Font = new Font("Corbel", 12F, FontStyle.Bold);
-            btnBaja.ForeColor = Color.White;
-            btnBaja.Location = new Point(960, 663);
-            btnBaja.Name = "btnBaja";
-            btnBaja.Size = new Size(268, 60);
-            btnBaja.TabIndex = 14;
-            btnBaja.Text = "Dar de baja al usuario";
-            btnBaja.UseVisualStyleBackColor = false;
-            btnBaja.Click += btnBaja_Click;
+            label2.Font = new Font("Corbel", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(12, 134);
+            label2.Name = "label2";
+            label2.Size = new Size(563, 53);
+            label2.TabIndex = 6;
+            label2.Text = "Ingresa el empleado que será dado de baja en el sistema.";
             // 
             // frmEliminaEmpleado
             // 
@@ -265,44 +147,26 @@ namespace EmpleadosMorados.View
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(37, 41, 47);
             ClientSize = new Size(1262, 769);
-            Controls.Add(btnConfirmarBorrar);
-            Controls.Add(btnBaja);
-            Controls.Add(dgvResultados);
-            Controls.Add(btnBuscar);
-            Controls.Add(txtApellidoBusqueda);
-            Controls.Add(lblApellidoBusqueda);
-            Controls.Add(txtNombreBusqueda);
-            Controls.Add(lblNombreBusqueda);
-            Controls.Add(lblDescripcion);
-            Controls.Add(lblTitulo);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(panelBar);
             Name = "frmEliminaEmpleado";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Eliminación de empleados";
             FormClosed += frmEliminaEmpleado_FormClosed;
             panelBar.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvResultados).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        // --- Declaraciones de Controles ---
         private Panel panelBar;
         private FontAwesome.Sharp.IconButton btnDeleteEmpleado;
         private FontAwesome.Sharp.IconButton btnUpdateEmpleado;
         private FontAwesome.Sharp.IconButton btnReadEmpleado;
         private FontAwesome.Sharp.IconButton btnCreateEmpleado;
-        private Label lblTitulo;
-        private Label lblDescripcion;
-        private Label lblNombreBusqueda;
-        private TextBox txtNombreBusqueda;
-        private Label lblApellidoBusqueda;
-        private TextBox txtApellidoBusqueda;
-        private Button btnBuscar;
-        private DataGridView dgvResultados;
-        private Button btnConfirmarBorrar;
-        private Button btnBaja;
+        private Label label1;
+        private Label label2;
     }
 }
