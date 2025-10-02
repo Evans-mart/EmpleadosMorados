@@ -52,24 +52,24 @@
             txtApPat = new TextBox();
             lblApPat = new Label();
             panel1 = new Panel();
-            txtNombreEmp = new TextBox();
+            txtNombre = new TextBox();
             lblNombres = new Label();
             gBoxDContacto = new GroupBox();
             panel8 = new Panel();
-            textBox3 = new TextBox();
+            txtTelefono = new TextBox();
             lblTelefono = new Label();
             panel7 = new Panel();
-            textBox2 = new TextBox();
+            txtCorreoSecundario = new TextBox();
             lblCorreo2 = new Label();
             panel6 = new Panel();
-            textBox1 = new TextBox();
+            txtCorreoPrincipal = new TextBox();
             lblCorreo1 = new Label();
             gBoxDomicilio = new GroupBox();
             panel15 = new Panel();
             cboMunicipio = new ComboBox();
             lblMunicipio = new Label();
             panel14 = new Panel();
-            comboBox1 = new ComboBox();
+            cboEstado = new ComboBox();
             lblEstado = new Label();
             panel13 = new Panel();
             txtColonia = new TextBox();
@@ -395,21 +395,21 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(txtNombreEmp);
+            panel1.Controls.Add(txtNombre);
             panel1.Controls.Add(lblNombres);
             panel1.Location = new Point(34, 26);
             panel1.Name = "panel1";
             panel1.Size = new Size(329, 63);
             panel1.TabIndex = 0;
             // 
-            // txtNombreEmp
+            // txtNombre
             // 
-            txtNombreEmp.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            txtNombreEmp.Location = new Point(3, 26);
-            txtNombreEmp.MaxLength = 100;
-            txtNombreEmp.Name = "txtNombreEmp";
-            txtNombreEmp.Size = new Size(326, 30);
-            txtNombreEmp.TabIndex = 1;
+            txtNombre.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            txtNombre.Location = new Point(3, 26);
+            txtNombre.MaxLength = 100;
+            txtNombre.Name = "txtNombre";
+            txtNombre.Size = new Size(326, 30);
+            txtNombre.TabIndex = 1;
             // 
             // lblNombres
             // 
@@ -438,23 +438,23 @@
             // 
             // panel8
             // 
-            panel8.Controls.Add(textBox3);
+            panel8.Controls.Add(txtTelefono);
             panel8.Controls.Add(lblTelefono);
             panel8.Location = new Point(835, 26);
             panel8.Name = "panel8";
             panel8.Size = new Size(329, 63);
             panel8.TabIndex = 4;
             // 
-            // textBox3
+            // txtTelefono
             // 
-            textBox3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            textBox3.ForeColor = Color.DarkGray;
-            textBox3.Location = new Point(3, 26);
-            textBox3.MaxLength = 10;
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(326, 30);
-            textBox3.TabIndex = 1;
-            textBox3.Text = "EJ: 7220001234";
+            txtTelefono.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            txtTelefono.ForeColor = Color.DarkGray;
+            txtTelefono.Location = new Point(3, 26);
+            txtTelefono.MaxLength = 10;
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Size = new Size(326, 30);
+            txtTelefono.TabIndex = 1;
+            txtTelefono.Text = "EJ: 7220001234";
             // 
             // lblTelefono
             // 
@@ -469,21 +469,21 @@
             // 
             // panel7
             // 
-            panel7.Controls.Add(textBox2);
+            panel7.Controls.Add(txtCorreoSecundario);
             panel7.Controls.Add(lblCorreo2);
             panel7.Location = new Point(434, 26);
             panel7.Name = "panel7";
             panel7.Size = new Size(329, 63);
             panel7.TabIndex = 3;
             // 
-            // textBox2
+            // txtCorreoSecundario
             // 
-            textBox2.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            textBox2.Location = new Point(3, 26);
-            textBox2.MaxLength = 100;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(326, 30);
-            textBox2.TabIndex = 1;
+            txtCorreoSecundario.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            txtCorreoSecundario.Location = new Point(3, 26);
+            txtCorreoSecundario.MaxLength = 100;
+            txtCorreoSecundario.Name = "txtCorreoSecundario";
+            txtCorreoSecundario.Size = new Size(326, 30);
+            txtCorreoSecundario.TabIndex = 1;
             // 
             // lblCorreo2
             // 
@@ -498,21 +498,21 @@
             // 
             // panel6
             // 
-            panel6.Controls.Add(textBox1);
+            panel6.Controls.Add(txtCorreoPrincipal);
             panel6.Controls.Add(lblCorreo1);
             panel6.Location = new Point(34, 26);
             panel6.Name = "panel6";
             panel6.Size = new Size(329, 63);
             panel6.TabIndex = 2;
             // 
-            // textBox1
+            // txtCorreoPrincipal
             // 
-            textBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            textBox1.Location = new Point(3, 26);
-            textBox1.MaxLength = 100;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(326, 30);
-            textBox1.TabIndex = 1;
+            txtCorreoPrincipal.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            txtCorreoPrincipal.Location = new Point(3, 26);
+            txtCorreoPrincipal.MaxLength = 100;
+            txtCorreoPrincipal.Name = "txtCorreoPrincipal";
+            txtCorreoPrincipal.Size = new Size(326, 30);
+            txtCorreoPrincipal.TabIndex = 1;
             // 
             // lblCorreo1
             // 
@@ -574,21 +574,22 @@
             // 
             // panel14
             // 
-            panel14.Controls.Add(comboBox1);
+            panel14.Controls.Add(cboEstado);
             panel14.Controls.Add(lblEstado);
             panel14.Location = new Point(434, 108);
             panel14.Name = "panel14";
             panel14.Size = new Size(329, 63);
             panel14.TabIndex = 7;
             // 
-            // comboBox1
+            // cboEstado
             // 
-            comboBox1.FlatStyle = FlatStyle.Flat;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 30);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(323, 28);
-            comboBox1.TabIndex = 1;
+            cboEstado.FlatStyle = FlatStyle.Flat;
+            cboEstado.FormattingEnabled = true;
+            cboEstado.Location = new Point(3, 30);
+            cboEstado.Name = "cboEstado";
+            cboEstado.Size = new Size(323, 28);
+            cboEstado.TabIndex = 1;
+            cboEstado.SelectedIndexChanged += cboEstado_SelectedIndexChanged;
             // 
             // lblEstado
             // 
@@ -825,6 +826,7 @@
             btnAgregar.Text = "AGREGAR";
             btnAgregar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnAgregar.UseVisualStyleBackColor = false;
+            btnAgregar.Click += btnAgregar_Click;
             // 
             // lblDatosObligatorios
             // 
@@ -911,7 +913,7 @@
         private Label label2;
         private GroupBox gBoxDPersonales;
         private Panel panel1;
-        private TextBox txtNombreEmp;
+        private TextBox txtNombre;
         private Label lblNombres;
         private Panel v;
         private TextBox txtCURP;
@@ -930,13 +932,13 @@
         private Label lblRFC;
         private GroupBox gBoxDContacto;
         private Panel panel8;
-        private TextBox textBox3;
+        private TextBox txtTelefono;
         private Label lblTelefono;
         private Panel panel7;
-        private TextBox textBox2;
+        private TextBox txtCorreoSecundario;
         private Label lblCorreo2;
         private Panel panel6;
-        private TextBox textBox1;
+        private TextBox txtCorreoPrincipal;
         private Label lblCorreo1;
         private GroupBox gBoxDomicilio;
         private Panel panel9;
@@ -957,7 +959,7 @@
         private Panel panel15;
         private Label lblMunicipio;
         private Panel panel14;
-        private ComboBox comboBox1;
+        private ComboBox cboEstado;
         private Label lblEstado;
         private ComboBox cboMunicipio;
         private GroupBox gBoxDEmpresarial;
