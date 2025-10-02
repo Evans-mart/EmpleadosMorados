@@ -237,5 +237,10 @@ namespace EmpleadosMorados.View
         {
 
         }
+
+        private void dgvResultados_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

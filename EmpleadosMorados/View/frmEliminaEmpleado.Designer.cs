@@ -222,6 +222,7 @@ namespace EmpleadosMorados.View
             dgvResultados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvResultados.Size = new Size(1194, 350);
             dgvResultados.TabIndex = 13;
+            dgvResultados.CellContentClick += dgvResultados_CellContentClick;
             dgvResultados.SelectionChanged += dgvResultados_SelectionChanged;
             // 
             // btnConfirmarBorrar
@@ -229,7 +230,6 @@ namespace EmpleadosMorados.View
             btnConfirmarBorrar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnConfirmarBorrar.BackColor = Color.Crimson;
             btnConfirmarBorrar.Cursor = Cursors.Hand;
-            //btnConfirmarBorrar.Enabled = false;
             btnConfirmarBorrar.FlatStyle = FlatStyle.Flat;
             btnConfirmarBorrar.Font = new Font("Corbel", 12F, FontStyle.Bold);
             btnConfirmarBorrar.ForeColor = Color.White;
@@ -241,12 +241,11 @@ namespace EmpleadosMorados.View
             btnConfirmarBorrar.UseVisualStyleBackColor = false;
             btnConfirmarBorrar.Click += btnEliminar_Click;
             // 
-            // btnConfirmarBaja
+            // btnBaja
             // 
             btnBaja.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnBaja.BackColor = Color.Crimson;
             btnBaja.Cursor = Cursors.Hand;
-            //btnBaja.Enabled = false;
             btnBaja.FlatStyle = FlatStyle.Flat;
             btnBaja.Font = new Font("Corbel", 12F, FontStyle.Bold);
             btnBaja.ForeColor = Color.White;

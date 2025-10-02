@@ -52,7 +52,7 @@ namespace EmpleadosMorados.Data
                 // --- TU CONSULTA CON UNA MEJORA IMPORTANTE ---
                 // Usamos ILIKE en lugar de = para que la búsqueda NO sea sensible a mayúsculas/minúsculas.
                 // Si usas "=", "Juan" no encontraría a "juan". Con ILIKE, sí lo hace.
-                string query = @"SELECT NUMERO_USUARIO, NOMBRE, APELLIDO_PAT, ID_DEPTO 
+                string query = @"SELECT NUMERO_USUARIO, NOMBRE, APELLIDO_PAT, ID_DEPTO, ESTATUS 
                          FROM USUARIOS 
                          WHERE (NOMBRE ILIKE @nom) AND (APELLIDO_PAT ILIKE @ap)";
 
