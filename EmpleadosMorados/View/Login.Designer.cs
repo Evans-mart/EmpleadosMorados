@@ -121,7 +121,7 @@
             txtCorreo.Name = "txtCorreo";
             txtCorreo.Size = new Size(268, 27);
             txtCorreo.TabIndex = 5;
-            txtCorreo.Text = "www@www.com";
+            txtCorreo.Text = "admin@gmail.com";
             // 
             // txtContraseña
             // 
@@ -129,7 +129,7 @@
             txtContraseña.Name = "txtContraseña";
             txtContraseña.Size = new Size(268, 27);
             txtContraseña.TabIndex = 6;
-            txtContraseña.Text = "www";
+            txtContraseña.Text = "admin123";
             // 
             // button1
             // 

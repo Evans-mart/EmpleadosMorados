@@ -38,22 +38,30 @@ namespace EmpleadosMorados.View
                 return;
             }
             // 3 Verificar credenciales y obtener rol
-            //var controller = new UsuariosController();
-            //var (autenticado, rol, mensaje) = controller.AutenticarUsuario(txtCorreo.Text, txtContraseña.Text);
-            //if (autenticado)
-            //{
-            //    this.DialogResult = DialogResult.OK;
-            //    this.Close();
-            //}
-            //else
-            //{
-            //    MessageBox.Show(mensaje, "Error de acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            string rol = UsuarioNegocios.ObtenerRol(txtCorreo.Text, txtContraseña.Text);
 
-            // 3️ Crear y mostrar el formulario de administrador
-            Forma1 form = new Forma1();
-            form.Show();
-            this.Hide();
+            if (rol != null)
+            {
+                // **Credenciales correctas**
+                // Almacenar el rol (opcional, pero útil para la lógica de la aplicación)
+                UsuarioNegocios.Rol = rol;
+
+                // Mostrar el formulario principal (Forma1) y ocultar el login
+                Forma1 form = new Forma1();
+                form.Show();
+                this.Hide();
+
+                // Si la Forma1 debe ser el formulario principal y se cierra, 
+                // el 'Login_FormClosed' se encargará de cerrar la aplicación.
+            }
+            else
+            {
+                // **Credenciales incorrectas**
+                MessageBox.Show("Correo o contraseña incorrectos. Por favor, verifica tus credenciales.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Limpiar campos o enfocar (opcional)
+                txtContraseña.Clear();
+                txtCorreo.Focus();
+            }
 
         }
 
