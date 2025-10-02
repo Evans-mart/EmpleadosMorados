@@ -82,6 +82,11 @@ namespace EmpleadosMorados.Data
                 _dbAccess.Disconnect();
             }
         }
+
+        // ** El método ActualizarEmpleado se eliminaría o modificaría para solo actualizar los campos laborales 
+        // ** en TRAY_LAB o una tabla de detalle laboral, asumiendo que los datos personales se actualizan por separado.
+
+
+        // (El resto de métodos como ObtenerTodosLosEmpleados, deben ser refactorizados para usar TRAY_LAB y la nueva estructura de Persona/Domicilio)
     }
 }
-
