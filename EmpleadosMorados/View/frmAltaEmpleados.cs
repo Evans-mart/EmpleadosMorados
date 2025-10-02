@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EmpleadosMorados.Business;
+using EmpleadosMorados.Controller;
 using EmpleadosMorados.Model;
 using static System.Windows.Forms.DataFormats;
 
@@ -16,11 +16,11 @@ namespace EmpleadosMorados.View
     public partial class frmAltaEmpleados : Form
     {
         // Instancia de la clase de negocio para orquestar la inserción
-        private readonly EmpleadosNegocio _empleadosNegocio;
+        private readonly EmpleadosController _empleadosNegocio;
         public frmAltaEmpleados()
         {
             InitializeComponent(); // Simulación del método generado por el diseñador
-            _empleadosNegocio = new EmpleadosNegocio();
+            _empleadosNegocio = new EmpleadosController();
             InicializaVentanaEmpleadoRegistro();
         }
         public void InicializaVentanaEmpleadoRegistro()
