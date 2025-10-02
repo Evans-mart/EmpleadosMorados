@@ -161,7 +161,7 @@ namespace EmpleadosMorados.Data
                     sql.Append("ESTATUS = @Estatus, ");
                     parametros.Add(_dbAccess.CreateParameter("@Estatus", persona.Estatus));
                 }
-                if (persona.IdDepartamento.HasValue)
+                if (persona.IdDepartamento == null)
                 {
                     sql.Append("ID_DEPTO = @IdDepto, ");
                     parametros.Add(_dbAccess.CreateParameter("@IdDepto", persona.IdDepartamento.Value));
