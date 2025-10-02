@@ -11,12 +11,12 @@
   <ItemGroup>
     <Folder Include="Controller\" />
     <Folder Include="Model\" />
-    <Folder Include="Data\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+    <PackageReference Include="NLog" Version="6.0.4" />
     <PackageReference Include="Npgsql" Version="9.0.3" />
   </ItemGroup>
 
