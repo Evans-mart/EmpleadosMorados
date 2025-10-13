@@ -24,7 +24,7 @@ namespace EmpleadosMorados.Controller
             _catalogosData = new CatalogosDataAccess();
         }
 
-        public (int id, string mensaje) RegistrarNuevoEmpleado(Empleado empleado, string municipioNombre, string estadoNombre)
+        public (int id, string mensaje) RegistrarNuevoEmpleado(Empleado empleado, string municipioNombre, string estadoNombre,string puestoNombre, string deptoNombre)
         {
             try
             {
@@ -44,6 +44,13 @@ namespace EmpleadosMorados.Controller
                 if (string.IsNullOrEmpty(idMunicipio))
                 {
                     return (-2, "Error: No se encontró el ID del Municipio/Estado seleccionado.");
+                }
+
+                // Validar el ID del Puesto
+                string idPuesto = _catalogosData.ObtenerIdPuestoPorNombres(puestoNombre, deptoNombre);
+                if (string.IsNullOrEmpty(idPuesto))
+                {
+                    return (-2, "Error: No se encontró el ID del Puesto/Depto seleccionado.");
                 }
 
                 // Asignar el ID al modelo Domicilio
@@ -119,6 +126,10 @@ namespace EmpleadosMorados.Controller
         public List<KeyValuePair<string, string>> ObtenerMunicipiosPorEstado(string idEstado)
         {
             return _catalogosData.ObtenerMunicipiosPorEstado(idEstado);
+        }
+        public List<KeyValuePair<string, string>> ObtenerPuestosPorDepto(string idDepto)
+        {
+            return _catalogosData.ObtenerPuestosPorDepto(idDepto);
         }
     }
 }

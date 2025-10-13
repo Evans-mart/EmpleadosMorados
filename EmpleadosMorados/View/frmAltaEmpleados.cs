@@ -144,6 +144,22 @@ namespace EmpleadosMorados.View
                 MessageBox.Show("Error al cargar municipios: " + ex.Message, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void PoblaPuestos(string idDepto)
+        {
+            // Implementación simplificada
+            try
+            {
+                var puestos = _empleadosNegocio.ObtenerPuestosPorDepto(idDepto);
+                cboPuesto.DataSource = new BindingSource(puestos, null);
+                cboPuesto.DisplayMember = "Value";
+                cboPuesto.ValueMember = "Key";
+                cboPuesto.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar puestos: " + ex.Message, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -185,6 +201,7 @@ namespace EmpleadosMorados.View
                     CorreoPrincipal = txtCorreoPrincipal.Text.Trim(),
                     CorreoSecundario = txtCorreoSecundario.Text.Trim(),
                     IdDepartamento = cboDepto.SelectedValue?.ToString(),
+                    IdPuesto = cboPuesto.SelectedValue?.ToString(),
                     Domicilio = domicilio,
                     Estatus = "ACTIVO"
                 };
@@ -204,7 +221,7 @@ namespace EmpleadosMorados.View
 
                 // ** 5. Llamar al Controlador/Negocio **
                 // Se envían los nombres de municipio/estado para que el negocio obtenga el ID_MUNICIPIO
-                var (id, mensaje) = _empleadosNegocio.RegistrarNuevoEmpleado(empleado, cboMunicipio.Text, cboEstado.Text);
+                var (id, mensaje) = _empleadosNegocio.RegistrarNuevoEmpleado(empleado, cboMunicipio.Text, cboEstado.Text,cboPuesto.Text,cboDepto.Text);
 
                 if (id > 0)
                 {
@@ -215,6 +232,7 @@ namespace EmpleadosMorados.View
                 {
                     MessageBox.Show($"Fallo en el registro: {mensaje}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
             }
             catch (Exception ex)
             {
@@ -256,8 +274,8 @@ namespace EmpleadosMorados.View
 
         private void LimpiarCampos()
         {
-           txtNombre.Text = string.Empty;
-           txtApPat.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtApPat.Text = string.Empty;
             txtApMat.Text = string.Empty;
             txtCURP.Text = string.Empty;
             txtRFC.Text = string.Empty;
@@ -278,6 +296,19 @@ namespace EmpleadosMorados.View
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
+        }
+
+        private void cboDepto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Simulación del ComboBox de Deptos
+            if (cboDepto.SelectedValue != null && cboDepto.SelectedValue is string idDepto)
+            {
+                PoblaPuestos(idDepto);
+            }
+            else
+            {
+                cboPuesto.DataSource = null;
+            }
         }
     }
 }

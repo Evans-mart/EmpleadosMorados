@@ -26,6 +26,8 @@ namespace EmpleadosMorados.Model
         public string CorreoSecundario { get; set; } // CORREOS (SECUNDARIO)
         public Domicilio Domicilio { get; set; } // DOMICILIOS
         public string IdDepartamento { get; set; } // ID_DEPTO
+
+        public string IdPuesto { get; set; } // ID_DEPTO
         public string NombreDepartamento { get; set; } // Nombre para la lectura
 
         // Constructor por defecto (para uso de ORM/mapeo)
@@ -49,7 +51,7 @@ namespace EmpleadosMorados.Model
         }
 
         // Constructor con campos básicos (Incluye RFC y Sexo)
-        public Persona(string nombreCompleto, string apellidoPaterno, string apellidoMaterno, string curp, string rfc, string telefono, string sexo, string correoPrincipal, string idDepartamento)
+        public Persona(string nombreCompleto, string apellidoPaterno, string apellidoMaterno, string curp, string rfc, string telefono, string sexo, string correoPrincipal, string idDepartamento, string idPuesto)
         {
             NombreCompleto = nombreCompleto;
             ApellidoPaterno = apellidoPaterno;
@@ -60,13 +62,13 @@ namespace EmpleadosMorados.Model
             Sexo = sexo;
             CorreoPrincipal = correoPrincipal;
             IdDepartamento = idDepartamento;
-
+            IdPuesto = idDepartamento;
             Domicilio = new Domicilio();
             Estatus = "ACTIVO";
         }
 
         // Constructor completo (para obtener datos de la BD o actualización total)
-        public Persona(int id, string nombreCompleto, string apellidoPaterno, string apellidoMaterno, string curp, string rfc, string telefono, string sexo, string estatus, string correoPrincipal, string correoSecundario, Domicilio domicilio, string idDepartamento, string nombreDepartamento)
+        public Persona(int id, string nombreCompleto, string apellidoPaterno, string apellidoMaterno, string curp, string rfc, string telefono, string sexo, string estatus, string correoPrincipal, string correoSecundario, Domicilio domicilio, string idDepartamento, string nombreDepartamento, string idPuesto)
         {
             Id = id;
             NombreCompleto = nombreCompleto;
@@ -81,6 +83,7 @@ namespace EmpleadosMorados.Model
             CorreoSecundario = correoSecundario;
             Domicilio = domicilio;
             IdDepartamento = idDepartamento;
+            IdPuesto = idPuesto;
             NombreDepartamento = nombreDepartamento;
         }
     }

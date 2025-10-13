@@ -87,6 +87,9 @@
             txtCalle = new TextBox();
             lblCalle = new Label();
             gBoxDEmpresarial = new GroupBox();
+            panel17 = new Panel();
+            cboPuesto = new ComboBox();
+            lblPuesto = new Label();
             panel16 = new Panel();
             cboDepto = new ComboBox();
             lblDepto = new Label();
@@ -114,6 +117,7 @@
             panel10.SuspendLayout();
             panel11.SuspendLayout();
             gBoxDEmpresarial.SuspendLayout();
+            panel17.SuspendLayout();
             panel16.SuspendLayout();
             SuspendLayout();
             // 
@@ -750,15 +754,45 @@
             // 
             // gBoxDEmpresarial
             // 
+            gBoxDEmpresarial.Controls.Add(panel17);
             gBoxDEmpresarial.Controls.Add(panel16);
             gBoxDEmpresarial.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             gBoxDEmpresarial.ForeColor = SystemColors.ControlLightLight;
             gBoxDEmpresarial.Location = new Point(13, 656);
             gBoxDEmpresarial.Name = "gBoxDEmpresarial";
-            gBoxDEmpresarial.Size = new Size(402, 104);
+            gBoxDEmpresarial.Size = new Size(816, 104);
             gBoxDEmpresarial.TabIndex = 11;
             gBoxDEmpresarial.TabStop = false;
             gBoxDEmpresarial.Text = "DATOS EMPRESARIAL";
+            // 
+            // panel17
+            // 
+            panel17.Controls.Add(cboPuesto);
+            panel17.Controls.Add(lblPuesto);
+            panel17.Location = new Point(434, 28);
+            panel17.Name = "panel17";
+            panel17.Size = new Size(329, 63);
+            panel17.TabIndex = 6;
+            // 
+            // cboPuesto
+            // 
+            cboPuesto.FlatStyle = FlatStyle.Flat;
+            cboPuesto.FormattingEnabled = true;
+            cboPuesto.Location = new Point(3, 28);
+            cboPuesto.Name = "cboPuesto";
+            cboPuesto.Size = new Size(323, 28);
+            cboPuesto.TabIndex = 2;
+            // 
+            // lblPuesto
+            // 
+            lblPuesto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblPuesto.AutoSize = true;
+            lblPuesto.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
+            lblPuesto.Location = new Point(3, 0);
+            lblPuesto.Name = "lblPuesto";
+            lblPuesto.Size = new Size(71, 23);
+            lblPuesto.TabIndex = 0;
+            lblPuesto.Text = "Puesto*";
             // 
             // panel16
             // 
@@ -777,6 +811,7 @@
             cboDepto.Name = "cboDepto";
             cboDepto.Size = new Size(323, 28);
             cboDepto.TabIndex = 2;
+            cboDepto.SelectedIndexChanged += cboDepto_SelectedIndexChanged;
             // 
             // lblDepto
             // 
@@ -800,7 +835,7 @@
             btnLimpiar.IconColor = Color.Cyan;
             btnLimpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnLimpiar.IconSize = 32;
-            btnLimpiar.Location = new Point(851, 674);
+            btnLimpiar.Location = new Point(933, 674);
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.Size = new Size(134, 58);
             btnLimpiar.TabIndex = 13;
@@ -834,7 +869,7 @@
             lblDatosObligatorios.AutoSize = true;
             lblDatosObligatorios.Font = new Font("Tahoma", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDatosObligatorios.ForeColor = Color.Brown;
-            lblDatosObligatorios.Location = new Point(453, 693);
+            lblDatosObligatorios.Location = new Point(987, 125);
             lblDatosObligatorios.Name = "lblDatosObligatorios";
             lblDatosObligatorios.Size = new Size(184, 21);
             lblDatosObligatorios.TabIndex = 14;
@@ -897,6 +932,8 @@
             panel11.ResumeLayout(false);
             panel11.PerformLayout();
             gBoxDEmpresarial.ResumeLayout(false);
+            panel17.ResumeLayout(false);
+            panel17.PerformLayout();
             panel16.ResumeLayout(false);
             panel16.PerformLayout();
             ResumeLayout(false);
@@ -970,5 +1007,8 @@
         private FontAwesome.Sharp.IconButton btnLimpiar;
         private FontAwesome.Sharp.IconButton btnAgregar;
         private Label lblDatosObligatorios;
+        private Panel panel17;
+        private ComboBox cboPuesto;
+        private Label lblPuesto;
     }
 }

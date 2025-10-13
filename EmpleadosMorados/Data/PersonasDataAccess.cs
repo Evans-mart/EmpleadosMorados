@@ -40,8 +40,8 @@ namespace EmpleadosMorados.Data
             {
                 // ** 1. Insertar en la tabla USUARIOS **
                 // La tabla USUARIOS tiene la columna ID_DEPTO que viene de la Persona.
-                string userQuery = @"INSERT INTO USUARIOS (NOMBRE, APELLIDO_PAT, APELLIDO_MAT, CURP, RFC, TELEFONO, SEXO, ESTATUS, ID_DEPTO)
-                                     VALUES (@Nombre, @ApellidoPat, @ApellidoMat, @Curp, @Rfc, @Telefono, @Sexo, @Estatus, @IdDepto) RETURNING NUMERO_USUARIO";
+                string userQuery = @"INSERT INTO USUARIOS (NOMBRE, APELLIDO_PAT, APELLIDO_MAT, CURP, RFC, TELEFONO, SEXO, ESTATUS, ID_DEPTO, ID_PUESTO)
+                                     VALUES (@Nombre, @ApellidoPat, @ApellidoMat, @Curp, @Rfc, @Telefono, @Sexo, @Estatus, @IdDepto, @IdPuesto) RETURNING NUMERO_USUARIO";
 
                 NpgsqlParameter[] userParams = new NpgsqlParameter[]
                 {
@@ -55,7 +55,8 @@ namespace EmpleadosMorados.Data
                     _dbAccess.CreateParameter("@Telefono", Convert.ToInt64(persona.Telefono)),
                     _dbAccess.CreateParameter("@Sexo", persona.Sexo),
                     _dbAccess.CreateParameter("@Estatus", persona.Estatus),
-                    _dbAccess.CreateParameter("@IdDepto", persona.IdDepartamento)
+                    _dbAccess.CreateParameter("@IdDepto", persona.IdDepartamento),
+                    _dbAccess.CreateParameter("@IdPuesto", persona.IdPuesto)
                 };
 
                 object result = _dbAccess.ExecuteScalar(userQuery, userParams);

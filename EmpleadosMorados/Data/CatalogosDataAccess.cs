@@ -29,46 +29,7 @@ namespace EmpleadosMorados.Data
         /// <param name="municipioNombre">Nombre del municipio.</param>
         /// <param name="estadoNombre">Nombre del estado.</param>
         /// <returns>ID_MUNICIPIO (VARCHAR(6)) o string.Empty si no se encuentra.</returns>
-        public string ObtenerIdMunicipioPorNombres(string municipioNombre, string estadoNombre)
-        {
-            string idMunicipio = string.Empty;
-            try
-            {
-                string query = @"SELECT m.ID_MUNICIPIO 
-                                 FROM CAT_MUNICIPIOS m
-                                 INNER JOIN CAT_ESTADOS e ON m.ID_ESTADO = e.ID_ESTADO
-                                 WHERE m.NOM_MUNICIPIO = @MunicipioNombre AND e.NOM_ESTADO = @EstadoNombre AND m.ESTATUS = 'ACTIVO'";
-
-                NpgsqlParameter[] parameters = new NpgsqlParameter[]
-                {
-                    _dbAccess.CreateParameter("@MunicipioNombre", municipioNombre),
-                    _dbAccess.CreateParameter("@EstadoNombre", estadoNombre)
-                };
-
-                _dbAccess.Connect();
-                object result = _dbAccess.ExecuteScalar(query, parameters);
-
-                if (result != null && result != DBNull.Value)
-                {
-                    idMunicipio = result.ToString();
-                    _logger.Debug($"ID_MUNICIPIO '{idMunicipio}' encontrado para {municipioNombre}, {estadoNombre}.");
-                }
-                else
-                {
-                    _logger.Warn($"ID_MUNICIPIO no encontrado para {municipioNombre}, {estadoNombre}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error al obtener ID de municipio por nombres.");
-                // Dejamos que el negocio maneje el error al devolver string.Empty
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-            return idMunicipio;
-        }
+        
 
         // ----------------------------------------------------------------------
         // MÉTODOS PARA POBLAR COMBOBOXES (Requerido por EmpleadosNegocio)
@@ -161,5 +122,121 @@ namespace EmpleadosMorados.Data
             }
             return municipios;
         }
+
+        public List<KeyValuePair<string, string>> ObtenerPuestosPorDepto(string idDepto)
+        {
+            List<KeyValuePair<string, string>> puestos = new List<KeyValuePair<string, string>>();
+            try
+            {
+                string query = @"SELECT ID_PUESTO, NOM_PUESTO 
+                                 FROM CAT_PUESTOS
+                                 WHERE ID_DEPTO = @IdDepto AND ESTATUS = 'ACTIVO'
+                                 ORDER BY NOM_PUESTO";
+
+                NpgsqlParameter paramIdDepto = _dbAccess.CreateParameter("@IdDepto", idDepto);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, paramIdDepto);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    // Key = ID_MUNICIPIO, Value = NOM_MUNICIPIO
+                    puestos.Add(new KeyValuePair<string, string>(row["ID_PUESTO"].ToString(), row["NOM_PUESTO"].ToString()));
+                }
+                _logger.Debug($"Se obtuvieron {puestos.Count} puestos para el depto {idDepto}.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener municipios para el estado {idDepto}.");
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+            return puestos;
+        }
+
+        public string ObtenerIdPuestoPorNombres(string puestoNombre, string deptoNombre)
+        {
+            string idPuesto = string.Empty;
+            try
+            {
+                string query = @"SELECT m.ID_PUESTO 
+                                 FROM CAT_PUESTOS m
+                                 INNER JOIN departamentos e ON m.ID_DEPTO = e.ID_DEPTO
+                                 WHERE m.NOM_PUESTO = @PuestoNombre AND e.NOMBRE_DEPTO = @DeptoNombre AND m.ESTATUS = 'ACTIVO'";
+
+                NpgsqlParameter[] parameters = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@PuestoNombre", puestoNombre),
+                    _dbAccess.CreateParameter("@DeptoNombre", deptoNombre)
+                };
+
+                _dbAccess.Connect();
+                object result = _dbAccess.ExecuteScalar(query, parameters);
+
+                if (result != null && result != DBNull.Value)
+                {
+                    idPuesto = result.ToString();
+                    _logger.Debug($"ID_PUESTO '{idPuesto}' encontrado para {puestoNombre}, {deptoNombre}.");
+                }
+                else
+                {
+                    _logger.Warn($"ID_PUESTO no encontrado para {puestoNombre}, {deptoNombre}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener ID de Puesto por nombres.");
+                // Dejamos que el negocio maneje el error al devolver string.Empty
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+            return idPuesto;
+        }
+
+        public string ObtenerIdMunicipioPorNombres(string municipioNombre, string estadoNombre)
+        {
+            string idMunicipio = string.Empty;
+            try
+            {
+                string query = @"SELECT m.ID_MUNICIPIO 
+                                 FROM CAT_MUNICIPIOS m
+                                 INNER JOIN CAT_ESTADOS e ON m.ID_ESTADO = e.ID_ESTADO
+                                 WHERE m.NOM_MUNICIPIO = @MunicipioNombre AND e.NOM_ESTADO = @EstadoNombre AND m.ESTATUS = 'ACTIVO'";
+
+                NpgsqlParameter[] parameters = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@MunicipioNombre", municipioNombre),
+                    _dbAccess.CreateParameter("@EstadoNombre", estadoNombre)
+                };
+
+                _dbAccess.Connect();
+                object result = _dbAccess.ExecuteScalar(query, parameters);
+
+                if (result != null && result != DBNull.Value)
+                {
+                    idMunicipio = result.ToString();
+                    _logger.Debug($"ID_MUNICIPIO '{idMunicipio}' encontrado para {municipioNombre}, {estadoNombre}.");
+                }
+                else
+                {
+                    _logger.Warn($"ID_MUNICIPIO no encontrado para {municipioNombre}, {estadoNombre}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener ID de municipio por nombres.");
+                // Dejamos que el negocio maneje el error al devolver string.Empty
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+            return idMunicipio;
+        }
+
     }
 }
