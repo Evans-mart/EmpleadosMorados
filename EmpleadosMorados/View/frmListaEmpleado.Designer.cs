@@ -43,7 +43,7 @@
             BotonBuscar = new Button();
             dgvusuarios = new DataGridView();
             label2 = new Label();
-            textBox1 = new TextBox();
+            txtUsuario = new TextBox();
             label3 = new Label();
             panelBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvusuarios).BeginInit();
@@ -158,7 +158,7 @@
             lblNombre.AutoSize = true;
             lblNombre.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNombre.ForeColor = SystemColors.ButtonFace;
-            lblNombre.Location = new Point(19, 171);
+            lblNombre.Location = new Point(320, 172);
             lblNombre.Name = "lblNombre";
             lblNombre.Size = new Size(71, 20);
             lblNombre.TabIndex = 5;
@@ -168,7 +168,7 @@
             // textnombre
             // 
             textnombre.BackColor = Color.White;
-            textnombre.Location = new Point(96, 168);
+            textnombre.Location = new Point(412, 172);
             textnombre.Margin = new Padding(3, 4, 3, 4);
             textnombre.Name = "textnombre";
             textnombre.Size = new Size(172, 27);
@@ -245,18 +245,18 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(274, 171);
+            label2.Location = new Point(19, 172);
             label2.Name = "label2";
-            label2.Size = new Size(130, 20);
+            label2.Size = new Size(96, 20);
             label2.TabIndex = 18;
-            label2.Text = "Apellido Paterno:";
+            label2.Text = "No. Usuario:";
             // 
-            // textBox1
+            // txtUsuario
             // 
-            textBox1.Location = new Point(400, 169);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(184, 27);
-            textBox1.TabIndex = 19;
+            txtUsuario.Location = new Point(121, 171);
+            txtUsuario.Name = "txtUsuario";
+            txtUsuario.Size = new Size(184, 27);
+            txtUsuario.TabIndex = 19;
             // 
             // label3
             // 
@@ -276,7 +276,7 @@
             BackColor = Color.FromArgb(37, 41, 47);
             ClientSize = new Size(1262, 769);
             Controls.Add(label3);
-            Controls.Add(textBox1);
+            Controls.Add(txtUsuario);
             Controls.Add(label2);
             Controls.Add(dgvusuarios);
             Controls.Add(BotonBuscar);
@@ -316,7 +316,7 @@
         private Button BotonBuscar;
         private DataGridView dgvusuarios;
         private Label label2;
-        private TextBox textBox1;
+        private TextBox txtUsuario;
         private Label label3;
     }
 }
