@@ -224,6 +224,7 @@
             BotonBuscar.TabIndex = 16;
             BotonBuscar.Text = "Buscar";
             BotonBuscar.UseVisualStyleBackColor = true;
+            BotonBuscar.Click += BotonBuscar_Click;
             // 
             // dgvusuarios
             // 

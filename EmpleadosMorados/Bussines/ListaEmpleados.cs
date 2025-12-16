@@ -17,7 +17,7 @@ namespace EmpleadosMorados.Bussines
             {
                 // Consulta base
                 string query = @"
-            SELECT 
+                SELECT 
                 u.NUMERO_USUARIO,
                 u.NOMBRE,
                 u.APELLIDO_PAT,
@@ -39,7 +39,7 @@ namespace EmpleadosMorados.Bussines
             FROM USUARIOS u
             LEFT JOIN DEPARTAMENTOS d ON u.ID_DEPTO = d.ID_DEPTO
             LEFT JOIN CORREOS c ON u.NUMERO_USUARIO = c.NUMERO_USUARIO AND c.TIPO = 'PRINCIPAL'
-            LEFT JOIN DOMICILIOS dom ON u.NUMERO_USUARIO = dom.NOMBRE_USUARIO
+            LEFT JOIN DOMICILIOS dom ON u.NUMERO_USUARIO = dom.NUMERO_USUARIO
             LEFT JOIN CAT_MUNICIPIOS m ON dom.ID_MUNICIPIO = m.ID_MUNICIPIO
             LEFT JOIN CAT_ESTADOS e ON m.ID_ESTADO = e.ID_ESTADO
             WHERE 1=1"; // siempre verdadero, facilita concatenar filtros
@@ -56,19 +56,19 @@ namespace EmpleadosMorados.Bussines
                 if (!string.IsNullOrWhiteSpace(numeroUsuario))
                 {
                     query += " AND u.NUMERO_USUARIO::TEXT = @numeroUsuario";
-                    parametros.Add(new NpgsqlParameter("@numeroUsuario", numeroUsuario));
+                    parametros.Add(new NpgsqlParameter("@numeroUsuario", numeroUsuario.Trim()));
                 }
 
                 if (!string.IsNullOrWhiteSpace(estatus))
                 {
                     query += " AND u.ESTATUS = @estatus";
-                    parametros.Add(new NpgsqlParameter("@estatus", estatus));
+                    parametros.Add(new NpgsqlParameter("@estatus", estatus.ToUpper()));
                 }
 
                 if (!string.IsNullOrWhiteSpace(departamento))
                 {
-                    query += " AND d.NOMBRE_DEPTO ILIKE @departamento";
-                    parametros.Add(new NpgsqlParameter("@departamento", $"%{departamento}%"));
+                    query += " AND d.ID_DEPTO ILIKE @departamento";
+                    parametros.Add(new NpgsqlParameter("@departamento", $"%{departamento.Trim()}%"));
                 }
 
                 query += " ORDER BY u.NUMERO_USUARIO";

@@ -93,6 +93,7 @@ namespace EmpleadosMorados.View
                 else
                 {
                     dgvusuarios.DataSource = dtUsuarios;
+                    MessageBox.Show("Filas encontradas: " + dtUsuarios.Rows.Count);
                     dgvusuarios.AutoResizeColumns();
                 }
             }
