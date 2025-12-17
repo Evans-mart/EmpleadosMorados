@@ -186,7 +186,6 @@ namespace EmpleadosMorados.Data
 
                 _logger.Info($"USUARIOS modificado para ID: {persona.Id}. Filas afectadas: {filasAfectadasUsuario}");
 
-                /*
                 // --------------------------------------------------------------------------
                 // ** 2. MODIFICAR/ACTUALIZAR la tabla CORREOS **
                 // --------------------------------------------------------------------------
@@ -195,12 +194,12 @@ namespace EmpleadosMorados.Data
                 {
                     // La lógica aquí sería hacer un UPDATE o un UPSERT
                     // Usaremos un método auxiliar de actualización:
-                    int afectadasCorreo = ActualizarOCrearCorreo(persona.IdPersona, persona.CorreoPrincipal, "PRINCIPAL");
+                    int afectadasCorreo = ActualizarOCrearCorreo(persona.Id, persona.CorreoPrincipal, "PRINCIPAL");
                     filasAfectadasTotal += afectadasCorreo;
                 }
                 if (!string.IsNullOrEmpty(persona.CorreoSecundario))
                 {
-                    int afectadasCorreo = ActualizarOCrearCorreo(persona.IdPersona, persona.CorreoSecundario, "SECUNDARIO");
+                    int afectadasCorreo = ActualizarOCrearCorreo(persona.Id, persona.CorreoSecundario, "SECUNDARIO");
                     filasAfectadasTotal += afectadasCorreo;
                 }
 
@@ -210,13 +209,13 @@ namespace EmpleadosMorados.Data
                 if (persona.Domicilio != null && !string.IsNullOrEmpty(persona.Domicilio.IdMunicipio))
                 {
                     // Asumimos un método auxiliar para actualizar el domicilio existente
-                    int afectadasDomicilio = ActualizarOCrearDomicilio(persona.IdPersona, persona.Domicilio);
+                    int afectadasDomicilio = ActualizarOCrearDomicilio(persona.Id, persona.Domicilio);
                     filasAfectadasTotal += afectadasDomicilio;
                 }
                 else
                 {
-                    _logger.Warn($"No se modificó Domicilio para ID: {persona.IdPersona} porque falta IdMunicipio o Domicilio es nulo.");
-                }*/
+                    _logger.Warn($"No se modificó Domicilio para ID: {persona.Id} porque falta IdMunicipio o Domicilio es nulo.");
+                }
 
                 return filasAfectadasTotal;
             }
@@ -231,6 +230,77 @@ namespace EmpleadosMorados.Data
             {
                 _dbAccess.Disconnect();
             }
+        }
+
+        private int ActualizarOCrearCorreo(int idUsuario, string correo, string tipo)
+        {
+            // 1. Intentar actualizar el correo existente (con el mismo tipo: PRINCIPAL/SECUNDARIO)
+            string updateQuery = @"
+                UPDATE CORREOS SET CORREO = @Correo 
+                WHERE NUMERO_USUARIO = @UsuarioId AND TIPO = @Tipo";
+
+            NpgsqlParameter[] updateParams = new NpgsqlParameter[]
+            {
+                _dbAccess.CreateParameter("@Correo", correo),
+                _dbAccess.CreateParameter("@UsuarioId", idUsuario),
+                _dbAccess.CreateParameter("@Tipo", tipo)
+            };
+
+            int rowsAffected = _dbAccess.ExecuteNonQuery(updateQuery, updateParams);
+            _logger.Debug($"Intentando actualizar correo {tipo} para ID: {idUsuario}. Filas afectadas: {rowsAffected}");
+
+            if (rowsAffected > 0)
+            {
+                return rowsAffected; // Éxito en la actualización
+            }
+
+            // 2. Si no se afectó ninguna fila (no existía), lo insertamos
+            _logger.Warn($"El correo {tipo} no existía, se procederá a insertarlo.");
+
+            // Reutilizamos el método de inserción que ya tienes
+            InsertarCorreo(idUsuario, correo, tipo);
+            return 1; // Devolvemos 1 fila afectada por la inserción
+        }
+
+        private int ActualizarOCrearDomicilio(int idUsuario, Domicilio domicilio)
+        {
+            // NOTA: Esta lógica asume que la persona solo tiene UN domicilio.
+            string updateQuery = @"
+                UPDATE DOMICILIOS SET 
+                    CALLE = @Calle, 
+                    NO_EXT = @NoExt, 
+                    NO_INT = @NoInt, 
+                    CP = @CP, 
+                    COLONIA = @Colonia, 
+                    ID_MUNICIPIO = @IdMunicipio
+                WHERE 
+                    NUMERO_USUARIO = @UsuarioId"; // Simplificado: actualiza el primer (o único) domicilio
+
+            NpgsqlParameter[] parameters = new NpgsqlParameter[]
+            {
+                _dbAccess.CreateParameter("@Calle", domicilio.Calle),
+                _dbAccess.CreateParameter("@NoExt", domicilio.NoExterior),
+                _dbAccess.CreateParameter("@NoInt", domicilio.NoInterior ?? "N/A"),
+                _dbAccess.CreateParameter("@CP", Convert.ToInt32(domicilio.CodigoPostal)),
+                _dbAccess.CreateParameter("@Colonia", domicilio.Colonia),
+                _dbAccess.CreateParameter("@IdMunicipio", domicilio.IdMunicipio),
+                _dbAccess.CreateParameter("@UsuarioId", idUsuario)
+            };
+
+            int rowsAffected = _dbAccess.ExecuteNonQuery(updateQuery, parameters);
+            _logger.Debug($"Intentando actualizar domicilio para ID: {idUsuario}. Filas afectadas: {rowsAffected}");
+
+            if (rowsAffected > 0)
+            {
+                return rowsAffected; // Éxito en la actualización
+            }
+
+            // Si no se afectó ninguna fila (no existía), lo insertamos
+            _logger.Warn($"El domicilio no existía para ID: {idUsuario}, se procederá a insertarlo.");
+
+            // Reutilizamos el método de inserción que ya tienes
+            InsertarDomicilio(idUsuario, domicilio);
+            return 1; // Devolvemos 1 fila afectada por la inserción
         }
 
 

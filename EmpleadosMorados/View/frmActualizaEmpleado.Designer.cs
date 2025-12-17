@@ -65,24 +65,24 @@
             groupBox2 = new GroupBox();
             lblMunicipioAct = new Label();
             panel15 = new Panel();
-            comboBox2 = new ComboBox();
-            panel14 = new Panel();
-            comboBox1 = new ComboBox();
+            cmbMnAct = new ComboBox();
+            cmbEAct = new Panel();
+            cmbEstadoAct = new ComboBox();
             lblEstadoAct = new Label();
-            panel13 = new Panel();
+            txtCPAct = new Panel();
             textBox5 = new TextBox();
             lblCPAct = new Label();
             panel12 = new Panel();
-            textBox4 = new TextBox();
+            txtNoIntAct = new TextBox();
             lblNoIntAct = new Label();
             panel11 = new Panel();
-            textBox2 = new TextBox();
+            txtColoniaAct = new TextBox();
             lblColoniaAct = new Label();
             panel10 = new Panel();
-            textBox3 = new TextBox();
+            txtNoExAct = new TextBox();
             lblNoExtAct = new Label();
             panel9 = new Panel();
-            textBox1 = new TextBox();
+            textCalleAct = new TextBox();
             lblCalleAct = new Label();
             groupBox3 = new GroupBox();
             panel18 = new Panel();
@@ -115,8 +115,8 @@
             panel3.SuspendLayout();
             groupBox2.SuspendLayout();
             panel15.SuspendLayout();
-            panel14.SuspendLayout();
-            panel13.SuspendLayout();
+            cmbEAct.SuspendLayout();
+            txtCPAct.SuspendLayout();
             panel12.SuspendLayout();
             panel11.SuspendLayout();
             panel10.SuspendLayout();
@@ -466,9 +466,9 @@
             lblApellidoPatAct.AutoSize = true;
             lblApellidoPatAct.Location = new Point(14, -3);
             lblApellidoPatAct.Name = "lblApellidoPatAct";
-            lblApellidoPatAct.Size = new Size(74, 20);
+            lblApellidoPatAct.Size = new Size(133, 20);
             lblApellidoPatAct.TabIndex = 0;
-            lblApellidoPatAct.Text = "Apellido*";
+            lblApellidoPatAct.Text = "Apellido Paterno*";
             // 
             // panel3
             // 
@@ -499,8 +499,8 @@
             // 
             groupBox2.Controls.Add(lblMunicipioAct);
             groupBox2.Controls.Add(panel15);
-            groupBox2.Controls.Add(panel14);
-            groupBox2.Controls.Add(panel13);
+            groupBox2.Controls.Add(cmbEAct);
+            groupBox2.Controls.Add(txtCPAct);
             groupBox2.Controls.Add(panel12);
             groupBox2.Controls.Add(panel11);
             groupBox2.Controls.Add(panel10);
@@ -525,38 +525,38 @@
             // 
             // panel15
             // 
-            panel15.Controls.Add(comboBox2);
+            panel15.Controls.Add(cmbMnAct);
             panel15.Location = new Point(862, 107);
             panel15.Name = "panel15";
             panel15.Size = new Size(344, 59);
             panel15.TabIndex = 5;
             // 
-            // comboBox2
+            // cmbMnAct
             // 
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(11, 23);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(323, 28);
-            comboBox2.TabIndex = 0;
+            cmbMnAct.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbMnAct.FormattingEnabled = true;
+            cmbMnAct.Location = new Point(11, 23);
+            cmbMnAct.Name = "cmbMnAct";
+            cmbMnAct.Size = new Size(323, 28);
+            cmbMnAct.TabIndex = 0;
             // 
-            // panel14
+            // cmbEAct
             // 
-            panel14.Controls.Add(comboBox1);
-            panel14.Controls.Add(lblEstadoAct);
-            panel14.Location = new Point(439, 107);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(344, 59);
-            panel14.TabIndex = 4;
+            cmbEAct.Controls.Add(cmbEstadoAct);
+            cmbEAct.Controls.Add(lblEstadoAct);
+            cmbEAct.Location = new Point(439, 107);
+            cmbEAct.Name = "cmbEAct";
+            cmbEAct.Size = new Size(344, 59);
+            cmbEAct.TabIndex = 4;
             // 
-            // comboBox1
+            // cmbEstadoAct
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(14, 23);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(323, 28);
-            comboBox1.TabIndex = 1;
+            cmbEstadoAct.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbEstadoAct.FormattingEnabled = true;
+            cmbEstadoAct.Location = new Point(14, 23);
+            cmbEstadoAct.Name = "cmbEstadoAct";
+            cmbEstadoAct.Size = new Size(323, 28);
+            cmbEstadoAct.TabIndex = 1;
             // 
             // lblEstadoAct
             // 
@@ -567,14 +567,14 @@
             lblEstadoAct.TabIndex = 0;
             lblEstadoAct.Text = "Estado*";
             // 
-            // panel13
+            // txtCPAct
             // 
-            panel13.Controls.Add(textBox5);
-            panel13.Controls.Add(lblCPAct);
-            panel13.Location = new Point(19, 107);
-            panel13.Name = "panel13";
-            panel13.Size = new Size(344, 59);
-            panel13.TabIndex = 3;
+            txtCPAct.Controls.Add(textBox5);
+            txtCPAct.Controls.Add(lblCPAct);
+            txtCPAct.Location = new Point(19, 107);
+            txtCPAct.Name = "txtCPAct";
+            txtCPAct.Size = new Size(344, 59);
+            txtCPAct.TabIndex = 3;
             // 
             // textBox5
             // 
@@ -594,19 +594,19 @@
             // 
             // panel12
             // 
-            panel12.Controls.Add(textBox4);
+            panel12.Controls.Add(txtNoIntAct);
             panel12.Controls.Add(lblNoIntAct);
             panel12.Location = new Point(642, 27);
             panel12.Name = "panel12";
             panel12.Size = new Size(137, 63);
             panel12.TabIndex = 2;
             // 
-            // textBox4
+            // txtNoIntAct
             // 
-            textBox4.Location = new Point(9, 19);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(125, 27);
-            textBox4.TabIndex = 1;
+            txtNoIntAct.Location = new Point(9, 19);
+            txtNoIntAct.Name = "txtNoIntAct";
+            txtNoIntAct.Size = new Size(125, 27);
+            txtNoIntAct.TabIndex = 1;
             // 
             // lblNoIntAct
             // 
@@ -619,19 +619,19 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(textBox2);
+            panel11.Controls.Add(txtColoniaAct);
             panel11.Controls.Add(lblColoniaAct);
             panel11.Location = new Point(862, 27);
             panel11.Name = "panel11";
             panel11.Size = new Size(344, 59);
             panel11.TabIndex = 1;
             // 
-            // textBox2
+            // txtColoniaAct
             // 
-            textBox2.Location = new Point(11, 19);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(323, 27);
-            textBox2.TabIndex = 1;
+            txtColoniaAct.Location = new Point(11, 19);
+            txtColoniaAct.Name = "txtColoniaAct";
+            txtColoniaAct.Size = new Size(323, 27);
+            txtColoniaAct.TabIndex = 1;
             // 
             // lblColoniaAct
             // 
@@ -644,19 +644,19 @@
             // 
             // panel10
             // 
-            panel10.Controls.Add(textBox3);
+            panel10.Controls.Add(txtNoExAct);
             panel10.Controls.Add(lblNoExtAct);
             panel10.Location = new Point(439, 27);
             panel10.Name = "panel10";
             panel10.Size = new Size(137, 63);
             panel10.TabIndex = 0;
             // 
-            // textBox3
+            // txtNoExAct
             // 
-            textBox3.Location = new Point(9, 19);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(125, 27);
-            textBox3.TabIndex = 1;
+            txtNoExAct.Location = new Point(9, 19);
+            txtNoExAct.Name = "txtNoExAct";
+            txtNoExAct.Size = new Size(125, 27);
+            txtNoExAct.TabIndex = 1;
             // 
             // lblNoExtAct
             // 
@@ -669,19 +669,19 @@
             // 
             // panel9
             // 
-            panel9.Controls.Add(textBox1);
+            panel9.Controls.Add(textCalleAct);
             panel9.Controls.Add(lblCalleAct);
             panel9.Location = new Point(19, 26);
             panel9.Name = "panel9";
             panel9.Size = new Size(344, 59);
             panel9.TabIndex = 0;
             // 
-            // textBox1
+            // textCalleAct
             // 
-            textBox1.Location = new Point(15, 20);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(323, 27);
-            textBox1.TabIndex = 1;
+            textCalleAct.Location = new Point(15, 20);
+            textCalleAct.Name = "textCalleAct";
+            textCalleAct.Size = new Size(323, 27);
+            textCalleAct.TabIndex = 1;
             // 
             // lblCalleAct
             // 
@@ -905,10 +905,10 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             panel15.ResumeLayout(false);
-            panel14.ResumeLayout(false);
-            panel14.PerformLayout();
-            panel13.ResumeLayout(false);
-            panel13.PerformLayout();
+            cmbEAct.ResumeLayout(false);
+            cmbEAct.PerformLayout();
+            txtCPAct.ResumeLayout(false);
+            txtCPAct.PerformLayout();
             panel12.ResumeLayout(false);
             panel12.PerformLayout();
             panel11.ResumeLayout(false);
@@ -974,8 +974,8 @@
         private Panel panel10;
         private Panel panel9;
         private Panel panel15;
-        private Panel panel14;
-        private Panel panel13;
+        private Panel cmbEAct;
+        private Panel txtCPAct;
         private Label lblCPAct;
         private Panel panel12;
         private Label lblNoIntAct;
@@ -984,13 +984,13 @@
         private Label lblCalleAct;
         private Label lblMunicipioAct;
         private Label lblEstadoAct;
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
+        private ComboBox cmbMnAct;
+        private ComboBox cmbEstadoAct;
         private TextBox textBox5;
-        private TextBox textBox4;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox1;
+        private TextBox txtNoIntAct;
+        private TextBox txtColoniaAct;
+        private TextBox txtNoExAct;
+        private TextBox textCalleAct;
         private GroupBox groupBox3;
         private Panel panel18;
         private Label lblNoTelefonoAct;

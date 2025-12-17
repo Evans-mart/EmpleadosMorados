@@ -14,11 +14,13 @@ namespace EmpleadosMorados.Data
         private static readonly Logger _logger = LoggingManager.GetLogger("NominaXpert.Data.EmpleadosDataAccess");
         private readonly PostgresSQLDataAccess _dbAccess;
         private readonly PersonasDataAccess _personasData;
+        private readonly CatalogosDataAccess _catalogosData;
 
         public EmpleadosDataAccess()
         {
             _dbAccess = PostgresSQLDataAccess.GetInstance();
             _personasData = new PersonasDataAccess();
+            _catalogosData = new CatalogosDataAccess();
         }
 
         // Insertar un nuevo empleado (Datos Personales + Registro Laboral)
@@ -86,36 +88,92 @@ namespace EmpleadosMorados.Data
         // ** El método ActualizarEmpleado se eliminaría o modificaría para solo actualizar los campos laborales 
         // ** en TRAY_LAB o una tabla de detalle laboral, asumiendo que los datos personales se actualizan por separado.
 
-        //public int ModificarDatosUsuario(Empleado empleado)
-        //{
-        //    if (empleado?.DatosPersonales == null || empleado.IdPersona <= 0)
-        //    {
-        //        _logger.Error("Datos del empleado nulos o ID de Persona no válido para la modificación.");
-        //        return -1;
-        //    }
+        public bool ActualizarEmpleado(Empleado empleado)
+        {
+            if (empleado == null || empleado.Id == 0)
+            {
+                _logger.Error("Intento de actualizar empleado con objeto nulo o sin ID (Registro Laboral).");
+                return false;
+            }
 
-            // --------------------------------------------------------------------------
-            // ÚNICO PASO: MODIFICAR Datos de la Persona/Usuario (solo tabla USUARIOS)
-            // --------------------------------------------------------------------------
+            try
+            {
+                _dbAccess.Connect();
 
-            // Se asume que este método en PersonasDataAccess actualiza dinámicamente
-            // los campos de la tabla principal de Usuarios (o la tabla de personas)
-            // basándose en los datos no nulos del objeto 'DatosPersonales'.
-            //int filasAfectadasUsuario = _personasData.ModificarUsuario(empleado.DatosPersonales);
+                // --- 1. Actualizar Datos Personales ---
+                // Llama al método ModificarPersona, que retorna el número de filas afectadas (int).
+                int filasPersonaAfectadas = _personasData.ModificarPersona(empleado.DatosPersonales);
 
-            //if (filasAfectadasUsuario < 0)
-            //{
-            //    _logger.Error($"Fallo interno al modificar los datos del usuario con ID: {empleado.IdPersona}.");
-            //    return -1; // Indica error
-            //}
+                if (filasPersonaAfectadas == -1)
+                {
+                    _logger.Error($"Fallo grave al modificar datos personales para ID_PERSONA: {empleado.IdPersona}. Revisar logs de PersonasDataAccess.");
+                    // Podrías lanzar una excepción o simplemente retornar false si el error es grave
+                    return false;
+                }
+                else if (filasPersonaAfectadas == 0)
+                {
+                    _logger.Warn($"Modificación de datos personales no realizó cambios (0 filas afectadas) para ID_PERSONA: {empleado.IdPersona}.");
+                }
+                else
+                {
+                    _logger.Info($"Datos personales actualizados (filas afectadas: {filasPersonaAfectadas}) para ID_PERSONA: {empleado.IdPersona}.");
+                }
 
-            //_logger.Info($"Modificación de datos de usuario exitosa para ID: {empleado.IdPersona}. Filas afectadas: {filasAfectadasUsuario}");
 
-            //// Si la actualización es exitosa, se devuelve el número de filas afectadas (0 o 1).
-            //return filasAfectadasUsuario;
+                // --- 2. Actualizar el Registro Laboral (TRAY_LAB) ---
+                // Usamos el campo Id (Id de TRAY_LAB) como clave de actualización.
+                string trayLabQuery = @"
+                    UPDATE TRAY_LAB SET 
+                        MATRICULA = @Matricula, 
+                        PUESTO = @Puesto, 
+                        SUELDO = @Sueldo, 
+                        TIPO_CONTRATO = @TipoContrato, 
+                        SALARIO_FIJO = @SalarioFijo, 
+                        FECHA_BAJA = @FechaBaja,
+                        FECHA_ALTA = @FechaIngreso 
+                    WHERE 
+                        ID = @IdRegistroLaboral;";
 
+                // Crea y mapea los parámetros del objeto Empleado
+                NpgsqlParameter[] trayLabParams = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@IdRegistroLaboral", empleado.Id), // ID de TRAY_LAB es la clave aquí
+                    _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
+                    _dbAccess.CreateParameter("@Puesto", empleado.Puesto),
+                    _dbAccess.CreateParameter("@Sueldo", empleado.Sueldo),
+                    _dbAccess.CreateParameter("@TipoContrato", empleado.TipoContrato),
+                    _dbAccess.CreateParameter("@SalarioFijo", empleado.SalarioFijo),
+                    // Manejo de valores DateTime nulos (NULL en BD)
+                    _dbAccess.CreateParameter("@FechaBaja", empleado.FechaBaja.HasValue ? (object)empleado.FechaBaja.Value : DBNull.Value),
+                    _dbAccess.CreateParameter("@FechaIngreso", empleado.FechaIngreso)
+                };
+
+                int rowsAffected = _dbAccess.ExecuteNonQuery(trayLabQuery, trayLabParams);
+
+                if (rowsAffected > 0)
+                {
+                    _logger.Info($"Registro laboral (TRAY_LAB) actualizado correctamente para ID: {empleado.Id}");
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn($"No se afectó ninguna fila al actualizar en TRAY_LAB para ID: {empleado.Id}. Puede que el registro no exista.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error crítico al actualizar el registro laboral (TRAY_LAB).");
+                throw; // Propagar la excepción a la capa de Negocio
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
         }
+
     }
+}
         // ...
 
         // (El resto de métodos como ObtenerTodosLosEmpleados, deben ser refactorizados para usar TRAY_LAB y la nueva estructura de Persona/Domicilio)
