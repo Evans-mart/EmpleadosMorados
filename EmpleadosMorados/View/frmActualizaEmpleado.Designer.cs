@@ -37,11 +37,8 @@
             label2 = new Label();
             groupBox1 = new GroupBox();
             btnBuscar = new FontAwesome.Sharp.IconButton();
-            panel2 = new Panel();
-            lblApellidoPat = new Label();
-            txtApellidoPat = new TextBox();
             panel1 = new Panel();
-            txtNombre = new TextBox();
+            txtIdActualiza = new TextBox();
             lblNombre = new Label();
             gBoxDatosPersonales = new GroupBox();
             panel8 = new Panel();
@@ -65,24 +62,24 @@
             groupBox2 = new GroupBox();
             lblMunicipioAct = new Label();
             panel15 = new Panel();
-            comboBox2 = new ComboBox();
+            cboMunicipio = new ComboBox();
             panel14 = new Panel();
-            comboBox1 = new ComboBox();
+            cboEstado = new ComboBox();
             lblEstadoAct = new Label();
             panel13 = new Panel();
-            textBox5 = new TextBox();
+            txtCP = new TextBox();
             lblCPAct = new Label();
             panel12 = new Panel();
-            textBox4 = new TextBox();
+            txtNoInt = new TextBox();
             lblNoIntAct = new Label();
             panel11 = new Panel();
-            textBox2 = new TextBox();
+            txtColonia = new TextBox();
             lblColoniaAct = new Label();
             panel10 = new Panel();
-            textBox3 = new TextBox();
+            txtNoExt = new TextBox();
             lblNoExtAct = new Label();
             panel9 = new Panel();
-            textBox1 = new TextBox();
+            txtCalle = new TextBox();
             lblCalleAct = new Label();
             groupBox3 = new GroupBox();
             panel18 = new Panel();
@@ -104,7 +101,6 @@
             btnActualizar = new FontAwesome.Sharp.IconButton();
             panelBar.SuspendLayout();
             groupBox1.SuspendLayout();
-            panel2.SuspendLayout();
             panel1.SuspendLayout();
             gBoxDatosPersonales.SuspendLayout();
             panel8.SuspendLayout();
@@ -248,13 +244,12 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(btnBuscar);
-            groupBox1.Controls.Add(panel2);
             groupBox1.Controls.Add(panel1);
             groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             groupBox1.ForeColor = Color.FromArgb(192, 0, 0);
             groupBox1.Location = new Point(12, 146);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(918, 92);
+            groupBox1.Size = new Size(404, 92);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             groupBox1.Text = "EMPLEADO PARA ACTUALIZAR";
@@ -268,63 +263,41 @@
             btnBuscar.IconColor = Color.FromArgb(128, 128, 255);
             btnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBuscar.IconSize = 35;
-            btnBuscar.Location = new Point(768, 23);
+            btnBuscar.Location = new Point(239, 26);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(134, 58);
             btnBuscar.TabIndex = 2;
             btnBuscar.Text = "BUSCAR";
             btnBuscar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBuscar.UseVisualStyleBackColor = false;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(lblApellidoPat);
-            panel2.Controls.Add(txtApellidoPat);
-            panel2.Location = new Point(378, 26);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(353, 60);
-            panel2.TabIndex = 1;
-            // 
-            // lblApellidoPat
-            // 
-            lblApellidoPat.AutoSize = true;
-            lblApellidoPat.Location = new Point(13, -3);
-            lblApellidoPat.Name = "lblApellidoPat";
-            lblApellidoPat.Size = new Size(133, 20);
-            lblApellidoPat.TabIndex = 1;
-            lblApellidoPat.Text = "Apellido Paterno*";
-            // 
-            // txtApellidoPat
-            // 
-            txtApellidoPat.Location = new Point(13, 20);
-            txtApellidoPat.Name = "txtApellidoPat";
-            txtApellidoPat.Size = new Size(326, 27);
-            txtApellidoPat.TabIndex = 0;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // panel1
             // 
-            panel1.Controls.Add(txtNombre);
+            panel1.Controls.Add(txtIdActualiza);
             panel1.Controls.Add(lblNombre);
             panel1.Location = new Point(19, 26);
             panel1.Name = "panel1";
-            panel1.Size = new Size(344, 58);
+            panel1.Size = new Size(192, 58);
             panel1.TabIndex = 0;
             // 
-            // txtNombre
+            // txtIdActualiza
             // 
-            txtNombre.Location = new Point(12, 20);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(326, 27);
-            txtNombre.TabIndex = 1;
+            txtIdActualiza.Location = new Point(16, 20);
+            txtIdActualiza.MaxLength = 3;
+            txtIdActualiza.Name = "txtIdActualiza";
+            txtIdActualiza.Size = new Size(143, 27);
+            txtIdActualiza.TabIndex = 1;
+            txtIdActualiza.KeyPress += txtIdActualiza_KeyPress;
             // 
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Location = new Point(12, -3);
+            lblNombre.Location = new Point(16, -3);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(74, 20);
+            lblNombre.Size = new Size(30, 20);
             lblNombre.TabIndex = 0;
-            lblNombre.Text = "Nombre*";
+            lblNombre.Text = "Id*";
             // 
             // gBoxDatosPersonales
             // 
@@ -525,38 +498,38 @@
             // 
             // panel15
             // 
-            panel15.Controls.Add(comboBox2);
+            panel15.Controls.Add(cboMunicipio);
             panel15.Location = new Point(862, 107);
             panel15.Name = "panel15";
             panel15.Size = new Size(344, 59);
             panel15.TabIndex = 5;
             // 
-            // comboBox2
+            // cboMunicipio
             // 
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(11, 23);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(323, 28);
-            comboBox2.TabIndex = 0;
+            cboMunicipio.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboMunicipio.FormattingEnabled = true;
+            cboMunicipio.Location = new Point(11, 23);
+            cboMunicipio.Name = "cboMunicipio";
+            cboMunicipio.Size = new Size(323, 28);
+            cboMunicipio.TabIndex = 0;
             // 
             // panel14
             // 
-            panel14.Controls.Add(comboBox1);
+            panel14.Controls.Add(cboEstado);
             panel14.Controls.Add(lblEstadoAct);
             panel14.Location = new Point(439, 107);
             panel14.Name = "panel14";
             panel14.Size = new Size(344, 59);
             panel14.TabIndex = 4;
             // 
-            // comboBox1
+            // cboEstado
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(14, 23);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(323, 28);
-            comboBox1.TabIndex = 1;
+            cboEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboEstado.FormattingEnabled = true;
+            cboEstado.Location = new Point(14, 23);
+            cboEstado.Name = "cboEstado";
+            cboEstado.Size = new Size(323, 28);
+            cboEstado.TabIndex = 1;
             // 
             // lblEstadoAct
             // 
@@ -569,19 +542,19 @@
             // 
             // panel13
             // 
-            panel13.Controls.Add(textBox5);
+            panel13.Controls.Add(txtCP);
             panel13.Controls.Add(lblCPAct);
             panel13.Location = new Point(19, 107);
             panel13.Name = "panel13";
             panel13.Size = new Size(344, 59);
             panel13.TabIndex = 3;
             // 
-            // textBox5
+            // txtCP
             // 
-            textBox5.Location = new Point(15, 23);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(323, 27);
-            textBox5.TabIndex = 1;
+            txtCP.Location = new Point(15, 23);
+            txtCP.Name = "txtCP";
+            txtCP.Size = new Size(323, 27);
+            txtCP.TabIndex = 1;
             // 
             // lblCPAct
             // 
@@ -594,19 +567,19 @@
             // 
             // panel12
             // 
-            panel12.Controls.Add(textBox4);
+            panel12.Controls.Add(txtNoInt);
             panel12.Controls.Add(lblNoIntAct);
             panel12.Location = new Point(642, 27);
             panel12.Name = "panel12";
             panel12.Size = new Size(137, 63);
             panel12.TabIndex = 2;
             // 
-            // textBox4
+            // txtNoInt
             // 
-            textBox4.Location = new Point(9, 19);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(125, 27);
-            textBox4.TabIndex = 1;
+            txtNoInt.Location = new Point(9, 19);
+            txtNoInt.Name = "txtNoInt";
+            txtNoInt.Size = new Size(125, 27);
+            txtNoInt.TabIndex = 1;
             // 
             // lblNoIntAct
             // 
@@ -619,19 +592,19 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(textBox2);
+            panel11.Controls.Add(txtColonia);
             panel11.Controls.Add(lblColoniaAct);
             panel11.Location = new Point(862, 27);
             panel11.Name = "panel11";
             panel11.Size = new Size(344, 59);
             panel11.TabIndex = 1;
             // 
-            // textBox2
+            // txtColonia
             // 
-            textBox2.Location = new Point(11, 19);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(323, 27);
-            textBox2.TabIndex = 1;
+            txtColonia.Location = new Point(11, 19);
+            txtColonia.Name = "txtColonia";
+            txtColonia.Size = new Size(323, 27);
+            txtColonia.TabIndex = 1;
             // 
             // lblColoniaAct
             // 
@@ -644,19 +617,19 @@
             // 
             // panel10
             // 
-            panel10.Controls.Add(textBox3);
+            panel10.Controls.Add(txtNoExt);
             panel10.Controls.Add(lblNoExtAct);
             panel10.Location = new Point(439, 27);
             panel10.Name = "panel10";
             panel10.Size = new Size(137, 63);
             panel10.TabIndex = 0;
             // 
-            // textBox3
+            // txtNoExt
             // 
-            textBox3.Location = new Point(9, 19);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(125, 27);
-            textBox3.TabIndex = 1;
+            txtNoExt.Location = new Point(9, 19);
+            txtNoExt.Name = "txtNoExt";
+            txtNoExt.Size = new Size(125, 27);
+            txtNoExt.TabIndex = 1;
             // 
             // lblNoExtAct
             // 
@@ -669,19 +642,19 @@
             // 
             // panel9
             // 
-            panel9.Controls.Add(textBox1);
+            panel9.Controls.Add(txtCalle);
             panel9.Controls.Add(lblCalleAct);
             panel9.Location = new Point(19, 26);
             panel9.Name = "panel9";
             panel9.Size = new Size(344, 59);
             panel9.TabIndex = 0;
             // 
-            // textBox1
+            // txtCalle
             // 
-            textBox1.Location = new Point(15, 20);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(323, 27);
-            textBox1.TabIndex = 1;
+            txtCalle.Location = new Point(15, 20);
+            txtCalle.Name = "txtCalle";
+            txtCalle.Size = new Size(323, 27);
+            txtCalle.TabIndex = 1;
             // 
             // lblCalleAct
             // 
@@ -883,10 +856,9 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Actualización de empleados";
             FormClosed += frmActualizaEmpleado_FormClosed;
+            Load += frmActualizaEmpleado_Load;
             panelBar.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             gBoxDatosPersonales.ResumeLayout(false);
@@ -944,11 +916,8 @@
         private Label label2;
         private GroupBox groupBox1;
         private Panel panel1;
-        private TextBox txtNombre;
+        private TextBox txtIdActualiza;
         private Label lblNombre;
-        private Panel panel2;
-        private TextBox txtApellidoPat;
-        private Label lblApellidoPat;
         private FontAwesome.Sharp.IconButton btnBuscar;
         private GroupBox gBoxDatosPersonales;
         private Panel panel5;
@@ -984,13 +953,13 @@
         private Label lblCalleAct;
         private Label lblMunicipioAct;
         private Label lblEstadoAct;
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
-        private TextBox textBox5;
-        private TextBox textBox4;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox1;
+        private ComboBox cboMunicipio;
+        private ComboBox cboEstado;
+        private TextBox txtCP;
+        private TextBox txtNoInt;
+        private TextBox txtColonia;
+        private TextBox txtNoExt;
+        private TextBox txtCalle;
         private GroupBox groupBox3;
         private Panel panel18;
         private Label lblNoTelefonoAct;
