@@ -85,6 +85,8 @@ namespace EmpleadosMorados.Data
             }
         }
 
+
+
         // ** El método ActualizarEmpleado se eliminaría o modificaría para solo actualizar los campos laborales 
         // ** en TRAY_LAB o una tabla de detalle laboral, asumiendo que los datos personales se actualizan por separado.
 
@@ -113,53 +115,55 @@ namespace EmpleadosMorados.Data
                 else if (filasPersonaAfectadas == 0)
                 {
                     _logger.Warn($"Modificación de datos personales no realizó cambios (0 filas afectadas) para ID_PERSONA: {empleado.IdPersona}.");
+                    return false;
                 }
                 else
                 {
                     _logger.Info($"Datos personales actualizados (filas afectadas: {filasPersonaAfectadas}) para ID_PERSONA: {empleado.IdPersona}.");
+                    return true;
                 }
 
 
                 // --- 2. Actualizar el Registro Laboral (TRAY_LAB) ---
                 // Usamos el campo Id (Id de TRAY_LAB) como clave de actualización.
-                string trayLabQuery = @"
-                    UPDATE TRAY_LAB SET 
-                        MATRICULA = @Matricula, 
-                        PUESTO = @Puesto, 
-                        SUELDO = @Sueldo, 
-                        TIPO_CONTRATO = @TipoContrato, 
-                        SALARIO_FIJO = @SalarioFijo, 
-                        FECHA_BAJA = @FechaBaja,
-                        FECHA_ALTA = @FechaIngreso 
-                    WHERE 
-                        ID = @IdRegistroLaboral;";
+                //string trayLabQuery = @"
+                //    UPDATE TRAY_LAB SET 
+                //        MATRICULA = @Matricula, 
+                //        PUESTO = @Puesto, 
+                //        SUELDO = @Sueldo, 
+                //        TIPO_CONTRATO = @TipoContrato, 
+                //        SALARIO_FIJO = @SalarioFijo, 
+                //        FECHA_BAJA = @FechaBaja,
+                //        FECHA_ALTA = @FechaIngreso 
+                //    WHERE 
+                //        ID = @IdRegistroLaboral;"; ????
 
                 // Crea y mapea los parámetros del objeto Empleado
-                NpgsqlParameter[] trayLabParams = new NpgsqlParameter[]
-                {
-                    _dbAccess.CreateParameter("@IdRegistroLaboral", empleado.Id), // ID de TRAY_LAB es la clave aquí
-                    _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
-                    _dbAccess.CreateParameter("@Puesto", empleado.Puesto),
-                    _dbAccess.CreateParameter("@Sueldo", empleado.Sueldo),
-                    _dbAccess.CreateParameter("@TipoContrato", empleado.TipoContrato),
-                    _dbAccess.CreateParameter("@SalarioFijo", empleado.SalarioFijo),
-                    // Manejo de valores DateTime nulos (NULL en BD)
-                    _dbAccess.CreateParameter("@FechaBaja", empleado.FechaBaja.HasValue ? (object)empleado.FechaBaja.Value : DBNull.Value),
-                    _dbAccess.CreateParameter("@FechaIngreso", empleado.FechaIngreso)
-                };
+                //NpgsqlParameter[] trayLabParams = new NpgsqlParameter[]
+                //{
+                //    _dbAccess.CreateParameter("@IdRegistroLaboral", empleado.Id), // ID de TRAY_LAB es la clave aquí
+                //    _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
+                //    _dbAccess.CreateParameter("@Puesto", empleado.Puesto),
+                //    _dbAccess.CreateParameter("@Sueldo", empleado.Sueldo),
+                //    _dbAccess.CreateParameter("@TipoContrato", empleado.TipoContrato),
+                //    _dbAccess.CreateParameter("@SalarioFijo", empleado.SalarioFijo),
+                //    // Manejo de valores DateTime nulos (NULL en BD)
+                //    _dbAccess.CreateParameter("@FechaBaja", empleado.FechaBaja.HasValue ? (object)empleado.FechaBaja.Value : DBNull.Value),
+                //    _dbAccess.CreateParameter("@FechaIngreso", empleado.FechaIngreso)
+                //};
 
-                int rowsAffected = _dbAccess.ExecuteNonQuery(trayLabQuery, trayLabParams);
+                //int rowsAffected = _dbAccess.ExecuteNonQuery(trayLabQuery, trayLabParams);
 
-                if (rowsAffected > 0)
-                {
-                    _logger.Info($"Registro laboral (TRAY_LAB) actualizado correctamente para ID: {empleado.Id}");
-                    return true;
-                }
-                else
-                {
-                    _logger.Warn($"No se afectó ninguna fila al actualizar en TRAY_LAB para ID: {empleado.Id}. Puede que el registro no exista.");
-                    return false;
-                }
+                //if (rowsAffected > 0)
+                //{
+                //    _logger.Info($"Registro laboral (TRAY_LAB) actualizado correctamente para ID: {empleado.Id}");
+                //    return true;
+                //}
+                //else
+                //{
+                //    _logger.Warn($"No se afectó ninguna fila al actualizar en TRAY_LAB para ID: {empleado.Id}. Puede que el registro no exista.");
+                //    return false;
+                //}
             }
             catch (Exception ex)
             {

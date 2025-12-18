@@ -64,8 +64,8 @@ namespace EmpleadosMorados.View
             {
                 // -- Mapeo de IDs (ocultos o solo lectura) --
                 // Estos IDs son CRUCIALES para que el UPDATE funcione
-                txtIdRegistroLaboral.Text = _empleadoCargado.Id.ToString();
-                txtIdPersona.Text = _empleadoCargado.IdPersona.ToString();
+                //txtIdRegistroLaboral.Text = _empleadoCargado.Id.ToString();
+                //txtIdPersona.Text = _empleadoCargado.IdPersona.ToString();
 
                 // -- Mapeo de Datos Personales (USUARIOS) --
                 txtNombre.Text = _empleadoCargado.DatosPersonales.NombreCompleto;
@@ -80,7 +80,7 @@ namespace EmpleadosMorados.View
                 txtNoIntAct.Text = _empleadoCargado.DatosPersonales.Domicilio.NoInterior;
                 txtColoniaAct.Text = _empleadoCargado.DatosPersonales.Domicilio.Colonia;
                 txtCPAct.Text = _empleadoCargado.DatosPersonales.Domicilio.CodigoPostal;
-                cmbEstadoAct = _controller.ObtenerEstados(_empleadoCargado.DatosPersonales.Domicilio);
+               // cmbEstadoAct = _controller.ObtenerEstados(_empleadoCargado.DatosPersonales.Domicilio);
 
                 // Cargar el valor seleccionado en el ComboBox de Departamento
                 cboDeptoAct.SelectedValue = _empleadoCargado.DatosPersonales.IdDepartamento;
@@ -169,18 +169,18 @@ namespace EmpleadosMorados.View
                 string municipioNombre = cmbMnAct.Text;
                 string estadoNombre = cmbEAct.Text;
 
-                var (codigo, mensaje) = _controller.ActualizarEmpleadoExistente(_empleadoCargado, municipioNombre, estadoNombre);
+                //var (codigo, mensaje) = _controller.ActualizarEmpleadoExistente(_empleadoCargado, municipioNombre, estadoNombre);
 
-                // 3. Manejo de Respuesta
-                if (codigo > 0)
-                {
-                    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show(mensaje, "Error en Actualización", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                //// 3. Manejo de Respuesta
+                //if (codigo > 0)
+                //{
+                //    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //    this.Close();
+                //}
+                //else
+                //{
+                //    MessageBox.Show(mensaje, "Error en Actualización", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
             }
             catch (Exception ex)
             {

@@ -100,166 +100,141 @@ namespace EmpleadosMorados.Data
 
         public int ModificarPersona(Persona persona)
         {
-            // Validamos la clave principal para la modificación
-            if (persona?.Id <= 0)
+            // 1. Validaciones básicas
+            if (persona == null || persona.Id <= 0)
             {
-                _logger.Error("ID de Persona no válido para la modificación.");
-                return -1;
+                // Retornamos 0 o lanzamos excepción según tu preferencia de manejo de errores
+                return 0;
             }
 
-            _dbAccess.Connect();
-            int filasAfectadasTotal = 0;
+            // 2. Construcción Dinámica del Query (StringBuilder)
+            // Esto es vital para no sobrescribir datos con NULL si el objeto persona viene incompleto.
+            StringBuilder queryBuilder = new StringBuilder("UPDATE USUARIOS SET ");
+            List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
-            try
+            // --- Mapeo de Campos ---
+
+            // Nombre
+            if (!string.IsNullOrWhiteSpace(persona.NombreCompleto))
             {
-                // --------------------------------------------------------------------------
-                // ** 1. MODIFICAR la tabla USUARIOS (Implementación Dinámica) **
-                // --------------------------------------------------------------------------
-
-                StringBuilder sql = new StringBuilder("UPDATE USUARIOS SET ");
-                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
-
-                // La construcción dinámica es crucial para evitar sobrescribir campos con NULL
-                if (!string.IsNullOrEmpty(persona.NombreCompleto))
-                {
-                    sql.Append("NOMBRE = @Nombre, ");
-                    parametros.Add(_dbAccess.CreateParameter("@Nombre", persona.NombreCompleto));
-                }
-                if (!string.IsNullOrEmpty(persona.ApellidoPaterno))
-                {
-                    sql.Append("APELLIDO_PAT = @ApellidoPat, ");
-                    parametros.Add(_dbAccess.CreateParameter("@ApellidoPat", persona.ApellidoPaterno));
-                }
-                // Nota: Si quieres permitir el borrado de ApellidoMaterno, no uses la validación !string.IsNullOrEmpty()
-                if (persona.ApellidoMaterno != null)
-                {
-                    sql.Append("APELLIDO_MAT = @ApellidoMat, ");
-                    // Usa DBNull si el valor es null, sino usa el valor
-                    parametros.Add(_dbAccess.CreateParameter("@ApellidoMat", persona.ApellidoMaterno ?? (object)DBNull.Value));
-                }
-                if (!string.IsNullOrEmpty(persona.Curp))
-                {
-                    sql.Append("CURP = @Curp, ");
-                    parametros.Add(_dbAccess.CreateParameter("@Curp", persona.Curp));
-                }
-                if (!string.IsNullOrEmpty(persona.Rfc))
-                {
-                    sql.Append("RFC = @Rfc, ");
-                    parametros.Add(_dbAccess.CreateParameter("@Rfc", persona.Rfc));
-                }
-                if (persona.Telefono != null) // Actualiza si se proporciona el campo Telefono
-                {
-                    sql.Append("TELEFONO = @Telefono, ");
-                    parametros.Add(_dbAccess.CreateParameter("@Telefono", Convert.ToInt64(persona.Telefono)));
-                }
-                if (!string.IsNullOrEmpty(persona.Sexo))
-                {
-                    sql.Append("SEXO = @Sexo, ");
-                    parametros.Add(_dbAccess.CreateParameter("@Sexo", persona.Sexo));
-                }
-                if (!string.IsNullOrEmpty(persona.Estatus))
-                {
-                    sql.Append("ESTATUS = @Estatus, ");
-                    parametros.Add(_dbAccess.CreateParameter("@Estatus", persona.Estatus));
-                }
-                if (persona.IdDepartamento != null)
-                {
-                    sql.Append("ID_DEPTO = @IdDepto, ");
-                    parametros.Add(_dbAccess.CreateParameter("@IdDepto", persona.IdDepartamento));
-                }
-
-                // Si no hay campos que actualizar, salimos
-                if (parametros.Count == 0)
-                {
-                    _logger.Warn($"No se proporcionaron campos para actualizar para ID: {persona.Id}.");
-                    return 0;
-                }
-
-                // Limpiar la última coma y agregar el WHERE
-                sql.Length -= 2;
-                sql.Append(" WHERE NUMERO_USUARIO = @IdPersona");
-                parametros.Add(_dbAccess.CreateParameter("@IdPersona", persona.Id));
-
-                // Ejecutar la actualización de USUARIOS
-                int filasAfectadasUsuario = _dbAccess.ExecuteNonQuery(sql.ToString(), parametros.ToArray());
-                filasAfectadasTotal += filasAfectadasUsuario;
-
-                _logger.Info($"USUARIOS modificado para ID: {persona.Id}. Filas afectadas: {filasAfectadasUsuario}");
-
-                // --------------------------------------------------------------------------
-                // ** 2. MODIFICAR/ACTUALIZAR la tabla CORREOS **
-                // --------------------------------------------------------------------------
-                // Asumimos que los métodos auxiliares (como Update/Upsert) existen.
-                if (!string.IsNullOrEmpty(persona.CorreoPrincipal))
-                {
-                    // La lógica aquí sería hacer un UPDATE o un UPSERT
-                    // Usaremos un método auxiliar de actualización:
-                    int afectadasCorreo = ActualizarOCrearCorreo(persona.Id, persona.CorreoPrincipal, "PRINCIPAL");
-                    filasAfectadasTotal += afectadasCorreo;
-                }
-                if (!string.IsNullOrEmpty(persona.CorreoSecundario))
-                {
-                    int afectadasCorreo = ActualizarOCrearCorreo(persona.Id, persona.CorreoSecundario, "SECUNDARIO");
-                    filasAfectadasTotal += afectadasCorreo;
-                }
-
-                // --------------------------------------------------------------------------
-                // ** 3. MODIFICAR/ACTUALIZAR la tabla DOMICILIOS **
-                // --------------------------------------------------------------------------
-                if (persona.Domicilio != null && !string.IsNullOrEmpty(persona.Domicilio.IdMunicipio))
-                {
-                    // Asumimos un método auxiliar para actualizar el domicilio existente
-                    int afectadasDomicilio = ActualizarOCrearDomicilio(persona.Id, persona.Domicilio);
-                    filasAfectadasTotal += afectadasDomicilio;
-                }
-                else
-                {
-                    _logger.Warn($"No se modificó Domicilio para ID: {persona.Id} porque falta IdMunicipio o Domicilio es nulo.");
-                }
-
-                return filasAfectadasTotal;
+                queryBuilder.Append("NOMBRE = @Nombre, ");
+                parametros.Add(new NpgsqlParameter("@Nombre", persona.NombreCompleto.Trim()));
             }
-            catch (Exception ex)
+
+            // Apellido Paterno
+            if (!string.IsNullOrWhiteSpace(persona.ApellidoPaterno))
             {
-                _logger.Error(ex, "Error en la modificación de la persona (USUARIOS, CORREOS, DOMICILIOS)");
-                // ADVERTENCIA CRÍTICA: Aquí, si falló en el Paso 2 o 3, el Paso 1 (USUARIOS) ya fue guardado. 
-                // Se requiere un ROLLBACK manual si se quiere integridad.
-                return -1;
+                queryBuilder.Append("APELLIDO_PAT = @ApellidoPat, ");
+                parametros.Add(new NpgsqlParameter("@ApellidoPat", persona.ApellidoPaterno.Trim()));
             }
-            finally
+
+            // Apellido Materno (Permite nulos o vacíos si se quiere borrar, depende de tu regla)
+            // Aquí asumimos que si viene null, no se toca. Si quieres borrarlo, deberías mandar string.Empty o manejarlo explícitamente.
+            if (persona.ApellidoMaterno != null)
             {
-                _dbAccess.Disconnect();
+                queryBuilder.Append("APELLIDO_MAT = @ApellidoMat, ");
+                parametros.Add(new NpgsqlParameter("@ApellidoMat", persona.ApellidoMaterno.Trim()));
+            }
+
+            // CURP
+            if (!string.IsNullOrWhiteSpace(persona.Curp))
+            {
+                queryBuilder.Append("CURP = @Curp, ");
+                parametros.Add(new NpgsqlParameter("@Curp", persona.Curp.Trim()));
+            }
+
+            // RFC
+            if (!string.IsNullOrWhiteSpace(persona.Rfc))
+            {
+                queryBuilder.Append("RFC = @Rfc, ");
+                parametros.Add(new NpgsqlParameter("@Rfc", persona.Rfc.Trim()));
+            }
+
+            // Teléfono (Asumiendo que es long/numeric)
+            if (!string.IsNullOrWhiteSpace(persona.Telefono))
+            {
+                queryBuilder.Append("TELEFONO = @Telefono, ");
+
+                // IMPORTANTE: Convertimos el string a Int64 (long) porque en la BD el campo es NUMERIC.
+                // Si lo mandas como string sin convertir, PostgreSQL podría dar error de tipos.
+                parametros.Add(new NpgsqlParameter("@Telefono", Convert.ToInt64(persona.Telefono)));
+            }
+
+            // Sexo
+            if (!string.IsNullOrWhiteSpace(persona.Sexo))
+            {
+                queryBuilder.Append("SEXO = @Sexo, ");
+                parametros.Add(new NpgsqlParameter("@Sexo", persona.Sexo));
+            }
+
+            // Estatus
+            if (!string.IsNullOrWhiteSpace(persona.Estatus))
+            {
+                queryBuilder.Append("ESTATUS = @Estatus, ");
+                parametros.Add(new NpgsqlParameter("@Estatus", persona.Estatus));
+            }
+
+            // Departamento
+            if (!string.IsNullOrWhiteSpace(persona.IdDepartamento))
+            {
+                queryBuilder.Append("ID_DEPTO = @IdDepto, ");
+                parametros.Add(new NpgsqlParameter("@IdDepto", persona.IdDepartamento));
+            }
+
+            // 3. Verificación de cambios
+            // Si no se agregó ningún campo al query (solo dice "UPDATE USUARIOS SET "), no hacemos nada.
+            if (parametros.Count == 0)
+            {
+                return 0;
+            }
+
+            // 4. Finalizar Query
+            // Quitamos la última coma y espacio ", " que agregó el StringBuilder
+            queryBuilder.Length -= 2;
+
+            // Agregamos el WHERE
+            queryBuilder.Append(" WHERE NUMERO_USUARIO = @IdPersona");
+            parametros.Add(new NpgsqlParameter("@IdPersona", persona.Id));
+
+            // 5. Ejecución usando la Transacción
+            // IMPORTANTE: Aquí usamos la conexión que vive dentro de la transacción.
+
+            using (var cmd = new NpgsqlCommand(queryBuilder.ToString()))
+            {
+                cmd.Parameters.AddRange(parametros.ToArray());
+
+                // Ejecutamos
+                int filasAfectadas = cmd.ExecuteNonQuery();
+                return filasAfectadas;
             }
         }
 
-        private int ActualizarOCrearCorreo(int idUsuario, string correo, string tipo)
+        public void ActualizarOCrearCorreo(int idUsuario, string correo, string tipo, NpgsqlTransaction transaction)
         {
-            // 1. Intentar actualizar el correo existente (con el mismo tipo: PRINCIPAL/SECUNDARIO)
-            string updateQuery = @"
-                UPDATE CORREOS SET CORREO = @Correo 
-                WHERE NUMERO_USUARIO = @UsuarioId AND TIPO = @Tipo";
+            if (string.IsNullOrWhiteSpace(correo)) return;
 
-            NpgsqlParameter[] updateParams = new NpgsqlParameter[]
+            string updateSql = "UPDATE CORREOS SET CORREO = @Correo WHERE NUMERO_USUARIO = @Id AND TIPO = @Tipo";
+
+            using (var cmd = new NpgsqlCommand(updateSql, transaction.Connection, transaction))
             {
-                _dbAccess.CreateParameter("@Correo", correo),
-                _dbAccess.CreateParameter("@UsuarioId", idUsuario),
-                _dbAccess.CreateParameter("@Tipo", tipo)
-            };
+                cmd.Parameters.Add(new NpgsqlParameter("@Correo", correo));
+                cmd.Parameters.Add(new NpgsqlParameter("@Id", idUsuario));
+                cmd.Parameters.Add(new NpgsqlParameter("@Tipo", tipo));
 
-            int rowsAffected = _dbAccess.ExecuteNonQuery(updateQuery, updateParams);
-            _logger.Debug($"Intentando actualizar correo {tipo} para ID: {idUsuario}. Filas afectadas: {rowsAffected}");
+                int filas = cmd.ExecuteNonQuery();
 
-            if (rowsAffected > 0)
-            {
-                return rowsAffected; // Éxito en la actualización
+                if (filas == 0) // No existía, INSERTAMOS
+                {
+                    string insertSql = "INSERT INTO CORREOS (NUMERO_USUARIO, CORREO, TIPO) VALUES (@Id, @Correo, @Tipo)";
+                    using (var cmdIns = new NpgsqlCommand(insertSql, transaction.Connection, transaction))
+                    {
+                        cmdIns.Parameters.Add(new NpgsqlParameter("@Correo", correo));
+                        cmdIns.Parameters.Add(new NpgsqlParameter("@Id", idUsuario));
+                        cmdIns.Parameters.Add(new NpgsqlParameter("@Tipo", tipo));
+                        cmdIns.ExecuteNonQuery();
+                    }
+                }
             }
-
-            // 2. Si no se afectó ninguna fila (no existía), lo insertamos
-            _logger.Warn($"El correo {tipo} no existía, se procederá a insertarlo.");
-
-            // Reutilizamos el método de inserción que ya tienes
-            InsertarCorreo(idUsuario, correo, tipo);
-            return 1; // Devolvemos 1 fila afectada por la inserción
         }
 
         private int ActualizarOCrearDomicilio(int idUsuario, Domicilio domicilio)

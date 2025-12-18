@@ -114,87 +114,36 @@ namespace EmpleadosMorados.Controller
             }
         }
 
-        public (int codigo, string mensaje) ActualizarEmpleadoExistente(Empleado empleado, string municipioNombre, string estadoNombre)
+        // =========================================================
+        // ACTUALIZACIÓN DE EMPLEADO (Método llamado por la VISTA)
+        // =========================================================
+        public bool ActualizarEmpleado(Empleado empleado)
         {
-            // Nota: Se omiten validaciones de Puesto/Depto porque se asume que el objeto empleado ya tiene los IDs
-            // Se asume que este método solo se llama cuando ya hay un empleado cargado (para evitar duplicidad de CURP/RFC)
-
+            // Este método simplificado es el que tu View espera.
+            // Llama a la lógica de negocio ActualizarEmp.
             try
             {
-                _logger.Info($"Iniciando actualización para empleado ID_PERSONA: {empleado.IdPersona} (Reg. Lab: {empleado.Id})");
-
-                // 1. Validaciones de Catálogos y Formato
-
-                // Validar y obtener el ID del Municipio
-                string idMunicipio = _catalogosData.ObtenerIdMunicipioPorNombres(municipioNombre, estadoNombre);
-                if (string.IsNullOrEmpty(idMunicipio))
-                {
-                    return (-2, "Error: No se encontró el ID del Municipio/Estado seleccionado.");
-                }
-
-                // Asignar el ID al modelo Domicilio
-                empleado.DatosPersonales.Domicilio.IdMunicipio = idMunicipio;
-
-                // Validar que el ID de Departamento sea válido
-                if (string.IsNullOrEmpty(empleado.DatosPersonales.IdDepartamento) ||
-                    !_catalogosData.ObtenerDepartamentosActivos().Exists(d => d.Key == empleado.DatosPersonales.IdDepartamento))
-                {
-                    return (-2, "Error: El Departamento seleccionado no es válido.");
-                }
-
-                // Validar el teléfono (debe tener 10 dígitos)
-                if (empleado.DatosPersonales.Telefono.ToString().Length != 10)
-                {
-                    return (-2, "Error: El número de teléfono debe tener 10 dígitos.");
-                }
-
-                // Validar SEXO (debe ser uno de los valores válidos)
-                if (!new List<string> { "FEMENINO", "MASCULINO", "OTRO" }.Contains(empleado.DatosPersonales.Sexo))
-                {
-                    return (-2, "Error: El sexo debe ser 'FEMENINO', 'MASCULINO' o 'OTRO'.");
-                }
-
-
-                // 2. Ejecutar la Lógica de Negocio (Llama a la capa Data/Bussines)
-                bool exito = _actualizarEmp.EjecutarActualizacion(empleado);
-
-                if (exito)
-                {
-                    _logger.Info($"Empleado actualizado exitosamente. ID Persona: {empleado.IdPersona}");
-                    return (empleado.IdPersona, "Empleado actualizado exitosamente."); // Devuelve el ID de Persona como resultado
-                }
-                else
-                {
-                    _logger.Warn($"Fallo al actualizar el empleado ID: {empleado.IdPersona}. El registro no existe o no se modificó.");
-                    return (0, "No se realizó la actualización. Verifique que el registro exista.");
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                // Captura las excepciones de validación lanzadas desde la capa Bussines
-                _logger.Error(ex, "Error de validación al actualizar empleado.");
-                return (-2, $"Error de Validación: {ex.Message}");
-            }
-            catch (Npgsql.PostgresException ex)
-            {
-                // Captura y maneja errores de la base de datos
-                _logger.Error(ex, "Error en la base de datos (PostgresException) durante la actualización.");
-                Console.WriteLine($"Código SQL: {ex.SqlState}");
-                return (-3, $"Error de base de datos: {ex.Message}. Código SQL: {ex.SqlState}");
+                return _actualizarEmp.EjecutarActualizacion(empleado);
             }
             catch (Exception ex)
             {
-                // Captura excepciones generales
-                _logger.Fatal(ex, "Error inesperado al actualizar el empleado.");
-                return (-4, $"Error inesperado: {ex.Message}");
+                _logger.Error(ex, "Error en el Controller al llamar a ActualizarEmp.");
+                // Re-lanzamos para que la Vista muestre el mensaje de error específico
+                throw;
             }
         }
 
+        // =========================================================
+        // CONSULTAS DE DATOS (READ)
+        // =========================================================
         public Empleado ObtenerEmpleadoParaActualizar(int idPersona)
         {
             try
             {
-                return _empleadosData.ObtenerEmpleadoPorIdPersona(idPersona);
+                // Asegúrate de que este método exista en EmpleadosDataAccess 
+                // y devuelva un objeto Empleado completo con sus relaciones.
+                //return _empleadosData.ObtenerEmpleadoPorIdPersona(idPersona);
+                return null; // Temporalmente retornamos null hasta implementar el método
             }
             catch (Exception ex)
             {
