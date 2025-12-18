@@ -530,6 +530,7 @@
             cboEstado.Name = "cboEstado";
             cboEstado.Size = new Size(323, 28);
             cboEstado.TabIndex = 1;
+            cboEstado.SelectedIndexChanged += cboEstado_SelectedIndexChanged;
             // 
             // lblEstadoAct
             // 
@@ -694,6 +695,7 @@
             txtNoTelAct.Name = "txtNoTelAct";
             txtNoTelAct.Size = new Size(323, 27);
             txtNoTelAct.TabIndex = 1;
+            txtNoTelAct.KeyPress += txtNoTelAct_KeyPress;
             // 
             // lblNoTelefonoAct
             // 
@@ -809,6 +811,7 @@
             cboDeptoAct.Name = "cboDeptoAct";
             cboDeptoAct.Size = new Size(323, 28);
             cboDeptoAct.TabIndex = 1;
+            cboDeptoAct.SelectedIndexChanged += cboDeptoAct_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -836,6 +839,7 @@
             btnActualizar.Text = "ACTUALIZAR";
             btnActualizar.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // frmActualizaEmpleado
             // 
